@@ -3043,7 +3043,7 @@ footer {
 }
 @media (max-width: 480px) {
   .oxygen-banner { flex-direction: column; }
-  .oxygen-svg { width: 100px; height: 75px; }
+  .oxygen-svg { width: 120px; height: 90px; }
 }
 
 /* ═══════════════════════════════════════
@@ -4629,6 +4629,7 @@ details.inline-mg ul li {
   .burden-accumulation-svg,
   .glasswand-svg,
   .ee-flow-svg,
+  .oxygen-svg,
   .wave-chart-wrap,
   .burden-accumulation-wrap,
   .glasswand-wrap,
