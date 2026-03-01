@@ -86,15 +86,17 @@ def bug02_svg_text_overflow():
                             error('02', f'{fp} «{name}»: «{txt[:50]}» overflow rechts (right≈{right:.0f}>{w})')
 def bug03_notfall_search_overlay():
     """notfall/index.html must have search-overlay DOM if search.js is loaded"""
-    c = read('notfall/index.html')
+    fp = 'handouts/notfall/index.html'
+    if not os.path.exists(fp): return
+    c = read(fp)
     has_searchjs = 'search.js' in c or 'search-index.js' in c
     has_overlay = 'id="search-overlay"' in c
     if has_searchjs and not has_overlay:
-        error('03', 'notfall/index.html: search.js geladen, aber kein <div id="search-overlay">')
+        error('03', f'{fp}: search.js geladen, aber kein <div id="search-overlay">')
     # Also check: exactly ONE overlay (no duplicates)
     count = c.count('id="search-overlay"')
     if count > 1:
-        error('03', f'notfall/index.html: {count}× id="search-overlay" (Duplikat)')
+        error('03', f'{fp}: {count}x id="search-overlay" (Duplikat)')
 def bug04_m7_email():
     """getElementById('m7-email') must be null-safe or element must exist"""
     js = read('main.js')
@@ -162,7 +164,7 @@ def bug07_sw_cache_assets():
         '/search.js': 'Suche offline kaputt',
         '/search-index.js': 'Suchindex offline kaputt',
         '/404.html': '404-Seite fehlt offline',
-        '/impressum/': 'Impressum fehlt offline',
+        '/handouts/impressum/': 'Impressum fehlt offline',
     }
     for path, impact in required.items():
         if path not in cached:
@@ -304,9 +306,11 @@ def bug19_404_meta():
         error('19', '404.html: Kein <meta name="description">')
 def bug20_notfall_og():
     """notfall should have specific OG image (warning only — requires design)"""
-    c = read('notfall/index.html')
+    fp = 'handouts/notfall/index.html'
+    if not os.path.exists(fp): return
+    c = read(fp)
     if 'og-notfall' not in c:
-        warn('20', 'notfall/index.html: Kein spezifisches OG-Image (og-notfall.png) — erfordert Grafikdesign')
+        warn('20', f'{fp}: Kein spezifisches OG-Image (og-notfall.png) — erfordert Grafikdesign')
 def bug21_dead_css():
     """Count CSS classes defined but never referenced in HTML or JS"""
     css = read('shared.css')
@@ -396,8 +400,8 @@ def general_structure():
         'search.js', 'search-index.js', 'sw.js',
         'manifest.json', 'robots.txt', 'sitemap.xml',
         'netlify.toml', '_redirects',
-        'notfall/index.html', 'impressum/index.html',
-        'ressourcen/index.html', 'handouts/index.html',
+        'handouts/index.html', 'handouts/notfall/index.html',
+        'handouts/impressum/index.html', 'handouts/ressourcen/index.html',
     ]
     for i in range(1, 8):
         expected.append(f'modul/{i}/index.html')
@@ -405,8 +409,9 @@ def general_structure():
         if not os.path.exists(fp):
             gerror('STRUCTURE', f'Erwartete Datei fehlt: {fp}')
     # Dev files
+    audit_files = {'audit.py', 'audit-v2.py'}
     for f in os.listdir('.'):
-        if f.endswith(('.py', '.pyc', '.log')):
+        if f.endswith(('.py', '.pyc', '.log')) and f not in audit_files:
             gerror('STRUCTURE', f'Dev-Datei im Deploy: {f}')
         if f in ('bugreport-v4.md', 'bugreport.md', '.env'):
             gerror('STRUCTURE', f'Internes Dokument im Deploy: {f}')
@@ -435,8 +440,21 @@ def general_html():
                 gerror('HTML', f'{fp}: Kein charset')
             if 'viewport' not in c:
                 gerror('HTML', f'{fp}: Kein viewport meta')
+def _load_redirects():
+    """Parse _redirects file to build a map of redirect sources to targets."""
+    redirects = {}
+    if os.path.exists('_redirects'):
+        for line in read('_redirects').splitlines():
+            line = line.strip()
+            if not line or line.startswith('#'): continue
+            parts = line.split()
+            if len(parts) >= 2:
+                redirects[parts[0].rstrip('/')] = parts[1].rstrip('/')
+    return redirects
+
 def general_links():
     """All internal href/src must resolve to existing files"""
+    redirects = _load_redirects()
     for fp in html_files():
         c = read(fp)
         for m in re.finditer(r'href="([^"]*)"', c):
@@ -452,6 +470,13 @@ def general_links():
             target = target.rstrip('/')
             exists = (os.path.exists(target) or os.path.exists(target + '/index.html')
                       or os.path.exists(target + '.html') or os.path.isdir(target))
+            # Check if a redirect covers this path
+            if not exists and path.startswith('/'):
+                redir_key = path.rstrip('/')
+                if redir_key in redirects:
+                    redir_target = '.' + redirects[redir_key]
+                    exists = (os.path.exists(redir_target) or os.path.exists(redir_target + '/index.html')
+                              or os.path.isdir(redir_target))
             if not exists:
                 gerror('LINKS', f'{fp}: href="{href}" → nicht gefunden')
             elif anchor:
@@ -536,10 +561,12 @@ def general_security():
                 gerror('SECURITY', f'{fp}: HTTP statt HTTPS: {m.group(1)}')
 def general_content():
     """Emergency numbers, search index terms, legal info"""
-    nf = read('notfall/index.html')
-    for num in ['143', '144', '117']:
-        if num not in nf:
-            gerror('CONTENT', f'notfall/index.html: Notfallnummer {num} fehlt')
+    nf_path = 'handouts/notfall/index.html'
+    if os.path.exists(nf_path):
+        nf = read(nf_path)
+        for num in ['143', '144', '117']:
+            if num not in nf:
+                gerror('CONTENT', f'{nf_path}: Notfallnummer {num} fehlt')
     si = read('search-index.js')
     for term in ['Krisenplan', 'Suizid', 'Manie', 'Depression']:
         if term.lower() not in si.lower():

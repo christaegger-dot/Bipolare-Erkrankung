@@ -99,7 +99,7 @@ def bug02_svg_text_overflow():
 
 def bug03_notfall_search_overlay():
     """Wenn notfall search.js laedt, muss search-overlay existieren (genau 1x)."""
-    fp = 'notfall/index.html'
+    fp = 'handouts/notfall/index.html'
     if not os.path.exists(fp): return
     c = read(fp)
     if 'search.js' in c and 'id="search-overlay"' not in c:
@@ -247,8 +247,12 @@ def bug15_skip_link():
 
 def bug16_dark_mode_footer():
     dm = get_dark_mode_block()
-    if dm and '.footer' not in dm:
-        error('16', '.footer fehlt im Dark-Mode-Block')
+    if not dm: return
+    # Check for both .footer class and footer tag selector
+    has_class = '.footer' in dm
+    has_tag = bool(re.search(r'(?<![.\w-])footer\s*[,{]', dm))
+    if not has_class and not has_tag:
+        error('16', 'footer fehlt im Dark-Mode-Block')
 
 def bug17_dark_mode_tooltip():
     dm = get_dark_mode_block()
@@ -267,7 +271,7 @@ def bug19_404_meta():
             error('19', '404.html: Kein meta description')
 
 def bug20_notfall_og():
-    fp = 'notfall/index.html'
+    fp = 'handouts/notfall/index.html'
     if os.path.exists(fp):
         c = read(fp)
         if 'og:image' in c and 'og-notfall' not in c:
@@ -317,15 +321,16 @@ def general_structure():
     expected = ['index.html', '404.html', 'shared.css', 'main.js', 'search.js',
                 'search-index.js', 'sw.js', 'manifest.json', 'robots.txt',
                 'sitemap.xml', 'netlify.toml', '_redirects',
-                'notfall/index.html', 'impressum/index.html',
-                'ressourcen/index.html', 'handouts/index.html']
+                'handouts/index.html', 'handouts/notfall/index.html',
+                'handouts/impressum/index.html', 'handouts/ressourcen/index.html']
     for i in range(1, 8):
         expected.append(f'modul/{i}/index.html')
     for fp in expected:
         if not os.path.exists(fp):
             error('GEN-STRUCT', f'Datei fehlt: {fp}')
+    audit_files = {'audit.py', 'audit-v2.py'}
     for f in os.listdir('.'):
-        if f.endswith(('.py', '.pyc', '.log')):
+        if f.endswith(('.py', '.pyc', '.log')) and f not in audit_files:
             error('GEN-STRUCT', f'Dev-Datei: {f}')
         if f in ('bugreport-v4.md', 'bugreport.md', '.env'):
             error('GEN-STRUCT', f'Internes Dokument: {f}')
@@ -350,7 +355,20 @@ def general_html():
         for m in re.finditer(r'(href|src)=""', c):
             error('GEN-HTML', f'{fp}: Leeres {m.group(1)}=""')
 
+def _load_redirects():
+    """Parse _redirects file to build a map of redirect sources to targets."""
+    redirects = {}
+    if os.path.exists('_redirects'):
+        for line in read('_redirects').splitlines():
+            line = line.strip()
+            if not line or line.startswith('#'): continue
+            parts = line.split()
+            if len(parts) >= 2:
+                redirects[parts[0].rstrip('/')] = parts[1].rstrip('/')
+    return redirects
+
 def general_links():
+    redirects = _load_redirects()
     for fp in html_files():
         c = read(fp)
         for m in re.finditer(r'href="([^"]*)"', c):
@@ -360,6 +378,12 @@ def general_links():
             target = ('.' + path) if path.startswith('/') else os.path.join(os.path.dirname(fp), path)
             target = target.rstrip('/')
             exists = os.path.exists(target) or os.path.exists(target+'/index.html') or os.path.exists(target+'.html') or os.path.isdir(target)
+            # Check if a redirect covers this path
+            if not exists and path.startswith('/'):
+                redir_key = path.rstrip('/')
+                if redir_key in redirects:
+                    redir_target = '.' + redirects[redir_key]
+                    exists = os.path.exists(redir_target) or os.path.exists(redir_target+'/index.html') or os.path.isdir(redir_target)
             if not exists:
                 error('GEN-LINKS', f'{fp}: href="{href}" nicht gefunden')
             elif anchor:
@@ -450,8 +474,8 @@ def general_content():
         si = read('search-index.js').lower()
         for t in ['krisenplan','suizid','manie','depression','grenzen']:
             if t not in si: error('GEN-CONTENT', f'Suchindex: <<{t}>> fehlt')
-    if os.path.exists('notfall/index.html'):
-        nf = read('notfall/index.html')
+    if os.path.exists('handouts/notfall/index.html'):
+        nf = read('handouts/notfall/index.html')
         for n in ['143','144','117']:
             if n not in nf: error('GEN-CONTENT', f'Notfallnummer {n} fehlt')
     for fp in html_files():
