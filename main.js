@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (fs) fs.textContent = 'A−';
     }
     // restore feedback states
-    ['m1','m2','m3','m4','m5','m6'].forEach(function(m) {
+    ['m1','m2','m3','m4','m5','m6','m7'].forEach(function(m) {
       var val = localStorage.getItem('bipolar-fb-' + m);
       if (val) {
         var thanks = document.getElementById('fb-' + m);

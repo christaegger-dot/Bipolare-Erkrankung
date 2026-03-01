@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="de">
+<html lang="de-CH">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -33,7 +33,7 @@
 </head>
 <body>
 <a class="skip-link" href="#main-content">Direkt zum Inhalt</a>
-<button aria-controls="notfall-banner" aria-expanded="false" id="notfall-trigger" onclick="document.getElementById('notfall-banner').classList.toggle('visible')">
+<button aria-controls="notfall-banner" aria-expanded="false" id="notfall-trigger" onclick="toggleNotfall(this)" title="Notfall-Informationen ein-/ausblenden">
   🆘   Ich brauche jetzt sofort Hilfe   ▼
 </button>
 <div id="notfall-banner">
@@ -151,7 +151,9 @@
 </div>
 </div>
 <div class="source-box">
-<strong>Hinweis:</strong> Diese Informationen ersetzen keine professionelle Beratung oder Therapie. 
+<strong>Hinweis:</strong> Diese Informationen ersetzen keine professionelle Beratung oder Therapie.
+Bei akuten Krisen wenden Sie sich an den <a href="tel:0800336655" class="danger-bold">Notfalldienst: 0800 33 66 55</a>.
+</div>
 
 <!-- ── Kinder & Familie ── -->
 <div class="ressourcen-section" id="kinder-familie" style="margin:2.5rem 0;">
@@ -221,8 +223,6 @@
 </div>
 </div>
 
-    Bei akuten Krisen wenden Sie sich an den <a href="tel:0800336655" class="danger-bold">Notfalldienst: 0800 33 66 55</a>.
-  </div>
 
 <h2>📖 Glossar</h2>
 <p style="font-size:var(--fs-sm);color:#706860;margin-bottom:0.5rem;">Klicken Sie auf einen Begriff, um die Erklärung zu sehen.</p>
@@ -266,6 +266,7 @@
 <div class="glossar-item">
 <button class="glossar-term" onclick="toggleGlossar(this)">Trialog <span class="gt-arrow">›</span></button>
 <div class="glossar-def"><p>Der gleichberechtigte Austausch zwischen drei Gruppen: Betroffene, Angehörige und Fachpersonen. Jede Perspektive hat eigene Expertise — der Trialog nutzt alle drei.</p><span class="gd-module">→ Modul 1</span></div>
+</div>
 
 <div class="glossar-item">
 <button class="glossar-term" onclick="toggleGlossar(this)">Bipolar I / Bipolar II <span class="glossar-arrow">›</span></button>
@@ -323,6 +324,7 @@
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)">Wo finde ich andere Angehörige zum Austausch? <span class="fq-arrow">›</span></button>
 <div class="faq-a"><div class="faq-a-inner"><a href="https://www.vaskzuerich.ch" target="_blank" rel="noopener">VASK Zürich</a> bietet Gesprächsgruppen speziell für Angehörige. Die <a href="https://www.selbsthilfezuerich.ch" target="_blank" rel="noopener">Selbsthilfe Zürich</a> vermittelt Selbsthilfegruppen. Und die Psychoedukationsgruppen der PUK ermöglichen den Austausch mit anderen Betroffenen in einem professionell begleiteten Rahmen.</div></div>
+</div>
 
 <div class="faq-item">
 <button class="faq-q" onclick="toggleFaq(this)">Wie erkläre ich die Krankheit meinen Kindern? <span class="faq-arrow">›</span></button>
