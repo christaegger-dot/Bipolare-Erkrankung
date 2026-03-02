@@ -1,204 +1,351 @@
-# Pre-Publication Audit Report (Re-Audit nach 40 Fixes)
+# Pre-Publication Audit — Bipolare Störung Website
 
-**Datum:** 2. Maerz 2026
-**Basis-Commit:** 6ce498a (nach Merge Tranche 1–3)
-**Branch:** claude/add-release-audit-script-ObnOa
-**Umfang:** 13 HTML, 1 CSS, 4 JS, 51 PDFs, 27 Thumbnails, 4 Fonts
-**Vorheriges Audit:** 083276d → 5 Blocker, 11 Warnings → NICHT BEREIT
-
----
-
-## Ergebnis: BEREIT
-
-| Kategorie | Anzahl |
-|-----------|--------|
-| Blocker   | 0      |
-| Warnings  | 0      |
-| Hints     | 4      |
-| Auto-Fixes (angewendet) | 2 |
-| Editorial-Marker (beabsichtigt) | 17 REDAKTIONELL, 4 DESIGN, 2 OPTIONAL |
+**Datum:** 2026-03-02
+**Projekt:** bipolare-erkrankung-angehoerige.netlify.app
+**Scope:** 13 HTML-Dateien, 1 CSS, 4 JS, Sitemap, robots.txt, manifest.json, SW
+**Commit:** Nach URL-Migration (642c7df)
 
 ---
 
-## A — Datei-Inventar & Struktur
+## Scorecard
 
-| Prüfung | Status |
-|---------|--------|
-| 13 HTML-Dateien vorhanden | OK |
-| shared.css (166 KB) | OK |
-| main.js (23 KB), search.js (4 KB), search-index.js (64 KB), sw.js (1 KB) | OK |
-| manifest.json in allen 13 HTML referenziert | OK |
-| fonts/ (4 woff2, 74 KB) | OK |
-| images/ (11 Dateien + thumbs/, 843 KB) | OK |
-| _redirects, robots.txt, sitemap.xml, netlify.toml | OK |
+| Bereich | Status | Blocker |
+|---------|--------|---------|
+| A — Strukturelle Integrität | ✅ OK | 0 |
+| B — Inhalte und Links | ✅ OK | 0 |
+| C — Visuelle Konsistenz | ✅ OK | 0 |
+| D — Funktionalität | ✅ OK | 0 |
+| E — Accessibility | ✅ OK | 0 |
+| F — Performance / Deployment | ✅ OK | 0 |
+| G — SEO und Meta | ✅ OK | 0 |
+| H — Sicherheit / Datenschutz | ✅ OK | 0 |
+| I — Verifizierung früherer Fixes | ✅ OK | 0 |
 
-## B — HTML-Validierung
-
-| Prüfung | Status |
-|---------|--------|
-| div-Balance alle 13 Dateien | OK (0 Mismatches) |
-| Semantische Tags (section, article, main, nav, header, footer) | OK |
-| Doppelte IDs | OK (0 Duplikate) |
-| Heading-Hierarchie h1→h2→h3 | OK (keine uebersprungenen Level) |
-| Interne Links | OK (Kurzlinks /notfall/, /impressum/, /ressourcen/ via _redirects aufgeloest) |
-| Externe Links | 29 unique, alle mit https:// |
-
-## C — Meta & SEO
-
-| Prüfung | Status |
-|---------|--------|
-| lang="de-CH" auf allen 13 Dateien | OK |
-| Canonical URLs einheitlich auf bipolar-angehoerige01.netlify.app | OK |
-| OG-Tags (title, description, image, url) | OK alle 13 Dateien |
-| OG-Bilder existieren (9 PNG) | OK |
-| Meta-Description auf allen Seiten | OK |
-| title-Tags auf allen Seiten | OK (einheitliches Format "Titel | PUK Zuerich") |
-| Sitemap URLs = tatsaechliche Pfade | OK (12 URLs, alle resolvbar) |
-| robots.txt mit korrekter Sitemap-URL | OK |
-| Domain-Konsistenz | OK (0 Abweichungen von bipolar-angehoerige01.netlify.app) |
-
-## D — Accessibility
-
-| Prüfung | Status |
-|---------|--------|
-| aria-expanded auf toggleGlossar (13/13) | OK |
-| aria-expanded auf toggleFaq (10/10) | OK |
-| aria-expanded auf toggleMG (4/4) | OK |
-| aria-label auf Self-Check-Buttons modul/3 (10) | OK |
-| role="button" mit tabindex + onkeydown | OK (modul/2: 4, modul/4: 1) |
-| Bilder: alle mit alt-Text | OK (0 ohne alt) |
-| Skip-Links auf allen Seiten | OK |
-| Focus-visible Styles (8 Regeln) | OK |
-| Touch-Targets min-height:44px (nav-btn, acc-header, filter-chip) | OK |
-| --muted #605850 (Kontrast ~5.1:1 vs #f7f5f2) | OK |
-| body.large-text CSS-Variablen-Overrides | OK |
-
-## E — CSS & Layout
-
-| Prüfung | Status |
-|---------|--------|
-| CSS-Variablen korrekt (--fs-base:1rem, --fs-sm:0.9rem) | OK |
-| body.large-text (--fs-base:1.05rem, --fs-sm:0.95rem, --fs-xs:0.85rem) | OK |
-| Responsive Breakpoints (768, 640, 600, 540, 480, 400px) | OK |
-| Print-Stylesheet | OK (@media print) |
-| prefers-reduced-motion | OK (2 Regeln) |
-| prefers-color-scheme:dark (SVG-Schutz) | OK |
-| !important nur in Print/Readmode/Reduced-Motion (22x) | OK |
-| @font-face in allen HTML (inline, font-display:swap) | OK |
-| Font-Preloads in allen Seiten | OK |
-
-## F — JavaScript
-
-| Prüfung | Status |
-|---------|--------|
-| console.log / console.error | OK (0 Statements) |
-| alert() | OK (0 Aufrufe) |
-| Alle onclick-Funktionen definiert (28 unique) | OK |
-| toggleMG/toggleGlossar/toggleFaq: aria-expanded-Logik | OK |
-| Service Worker (bipolar-puk-v5, stale-while-revalidate) | OK |
-| SW in allen 13 HTML registriert | OK |
-| Search-Index: 234 Eintraege, M1–M7 abgedeckt | OK |
-| Feedback-Restore: m7 in Array | OK |
-
-## G — Content & Rechtliches
-
-| Prüfung | Status |
-|---------|--------|
-| Eszett (ss) in HTML-Dateien | OK (0 Vorkommen) |
-| Impressum: Datenschutz-Statement | OK |
-| Impressum: Schriften lokal, keine externen Dienste | OK |
-| PUK Zuerich Branding auf allen Seiten | OK |
-| Copyright 2026 | OK |
-| Notfall-Seite: Notfallnummern vorhanden (0800 33 66 55, 144, 117, 143) | OK |
-| Keine externen Scripts/Stylesheets | OK (vollstaendig self-contained) |
-| Keine TODO/FIXME/HACK im Code | OK |
-
-## H — Performance & Deployment
-
-| Prüfung | Status |
-|---------|--------|
-| netlify.toml: Security Headers (CSP, X-Frame, X-XSS, nosniff, Referrer) | OK |
-| Caching: Fonts immutable, CSS 7d, JS 1d, PDFs 7d | OK |
-| 404-Redirect in netlify.toml | OK |
-| _redirects: 13 Regeln (Module + Handout-Seiten) | OK |
-| Gesamtgroesse (ohne PDFs): ~700 KB HTML + 166 KB CSS + 92 KB JS + 74 KB Fonts + 843 KB Images = ~1.9 MB | OK |
-
-## I — Editorial-Marker
-
-Alle Marker sind beabsichtigte HTML-Kommentare fuer die redaktionelle Nachbearbeitung.
-Sie sind fuer Endnutzer nicht sichtbar und beeintraechtigen die Funktionalitaet nicht.
-
-### REDAKTIONELL (17 Kommentare)
-- Pro Mente Sana Oeffnungszeiten pruefen: 9 Dateien
-- Infografik-PDFs Format (797x1429pt): 2 Dateien
-- Textversions-PDFs Groesse pruefen: 2 Dateien
-- Gemischte Episoden ergaenzen: modul/1
-- Haeusliche Gewalt Hinweis: modul/2
-- Chiba et al. Prozentangaben: modul/6
-
-### DESIGN (4 Kommentare)
-- Eigene OG-Images erstellen: 404, handouts, notfall, ressourcen
-
-### OPTIONAL (2 Kommentare)
-- Schmid Stichprobengroesse: modul/1
-- SVG-Dark-Mode-Schutz: shared.css
+**Gesamtergebnis: BEREIT — Keine Go-Live-Blocker gefunden.**
 
 ---
 
-## Auto-Fixes (in diesem Audit angewendet)
+## A — Strukturelle Integrität
 
-| # | Datei | Fix | Schwere |
-|---|-------|-----|---------|
-| 1 | search-index.js | "Reiss" statt "Reiss" (1x ss-Korrektur) | Hint |
-| 2 | handouts/ressourcen/index.html:232 | Inline color:#706860 → var(--muted) | Hint |
+### A1 — HTML
 
----
+| Prüfung | Ergebnis |
+|---------|----------|
+| A1.1 Tag-Balance (div, section, nav, main, header, footer) | ✅ Alle 13 Dateien balanciert |
+| A1.2 Duplicate Attributes | ✅ Keine gefunden |
+| A1.3 Grundstruktur (DOCTYPE, lang, title, viewport, h1) | ✅ Alle 13 Dateien korrekt |
 
-## Hints (informativ, kein Handlungsbedarf)
+- Alle Dateien: `<!DOCTYPE html>`, `<html lang="de-CH">`, `<meta charset="UTF-8">`, `<meta name="viewport">`, je 1x `<h1>`
 
-| # | Beschreibung | Datei |
-|---|-------------|-------|
-| 1 | 404.html hat Canonical auf /404.html (unueblich fuer Error-Page) | 404.html |
-| 2 | Kurzlinks (/notfall/, /impressum/, /ressourcen/) in HTML statt Vollpfade — funktional via _redirects, aber ein Redirect-Hop | Alle Dateien |
-| 3 | shared.css 166 KB unkomprimiert (kein Minification) — Netlify-Kompression (Brotli) macht das akzeptabel | shared.css |
-| 4 | Notfall Skip-Link zeigt auf #main statt #main-content (konsistent mit dem Rest waere #main-content) | handouts/notfall/index.html |
+### A2 — CSS
 
----
+| Prüfung | Ergebnis |
+|---------|----------|
+| A2.1 Klammer-Balance `shared.css` | ✅ 1272 öffnend / 1272 schliessend |
+| A2.2 Klassen-Referenzen | ✅ Stichproben OK (nav-btn, module-card, notfall-*, skip-link etc.) |
 
-## Vergleich zum vorherigen Audit
+### A3 — JavaScript
 
-| Kategorie | Vorher (083276d) | Jetzt (6ce498a+) |
-|-----------|-----------------|-------------------|
-| Blocker   | 5               | 0                 |
-| Warnings  | 11              | 0                 |
-| Hints     | 7               | 4                 |
-| Empfehlung | NICHT BEREIT   | BEREIT            |
-
-### Behobene Blocker (alle 5)
-1. handouts/index.html war Kopie von notfall → restauriert
-2. Notfall-Banner-Toggle fehlte → hinzugefuegt
-3. div-Balance Fehler → behoben
-4. Doppelte IDs → bereinigt
-5. ARIA-Banner fehlte → ergaenzt
-
-### Behobene Warnings (alle 11)
-1. section-title als div → h3
-2. Eszett in HTML-Dateien → ss
-3. Canonical-Domain uneinheitlich → vereinheitlicht
-4. Sitemap mit Redirect-URLs → korrigiert auf Vollpfade
-5. OG-Images fehlend → Fallback auf og-index.png
-6. Impressum Google-Fonts-Statement falsch → korrigiert
-7. Touch-Targets unter 44px → min-height:44px
-8. --muted Kontrast ungenuegend → #605850
-9. Font-Size-Variablen zu klein → --fs-base:1rem
-10. body.large-text fehlte → CSS-Variablen ergaenzt
-11. aria-expanded fehlte auf Accordions → alle ergaenzt
+| Prüfung | Ergebnis |
+|---------|----------|
+| A3.1 Referenzierte JS-Dateien existieren | ✅ main.js, search.js, search-index.js, sw.js |
+| A3.2 console.log / console.error / console.warn | ✅ Keine gefunden |
+| A3.3 TODO / FIXME / HACK | ✅ Keine gefunden |
+| A3.4 onclick-Funktionen definiert | ✅ Alle (toggleNotfall, toggleNav, toggleFont, toggleReadmode, scrollToTop, doSearch, closeSearch, openSearch, toggleBookmarks, etc.) |
 
 ---
 
-## Empfehlung
+## B — Inhalte und Links
 
-**BEREIT fuer Veroeffentlichung.**
+### B1 — Interne Links
 
-Keine Blocker, keine Warnings. Die 4 Hints sind informativ und verhindern keinen Go-Live.
-Die Editorial-Marker (REDAKTIONELL/DESIGN) sind beabsichtigte Erinnerungen fuer die redaktionelle Weiterarbeit und als HTML-Kommentare fuer Endnutzer unsichtbar.
+| Prüfung | Ergebnis |
+|---------|----------|
+| B1.1 Modullinks /modul/1-7/ | ✅ Alle 7 Verzeichnisse existieren |
+| B1.2 Handout-Links /handouts/, /handouts/notfall/ etc. | ✅ Alle 4 Verzeichnisse existieren |
+| B1.3 Shortcut-Pfade /notfall/, /ressourcen/, /impressum/ | ✅ Via `_redirects` (301) auf /handouts/... umgeleitet |
+| B1.4 Modul-Shortcuts /m1 bis /m7 | ✅ Via `_redirects` (301) umgeleitet |
+| B1.5 Hash-Redirect für alte Anker /#m1..#m7 | ✅ JS-Redirect in index.html:68-80 |
+
+### B2 — Externe Links
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| B2.1 Alte URLs (bipolar-angehoerige01 / bipolar-psychoedukation-puk) | ✅ 0 Referenzen in Code-Dateien |
+| B2.2 Externe HTTPS-Links | ✅ 16 externe Domains, alle plausibel (pukzh.ch, promentesana.ch, vaskzuerich.ch, etc.) |
+| B2.3 tel:-Links Format | ✅ 11 Nummern korrekt (Kurznummern 117/143/144/147, +41-Format für Langwahl) |
+
+### B3 — Orthografie
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| B3.1 Eszett (ß) | ✅ 0 Vorkommen in HTML/JS/CSS |
+| B3.2 Platzhalter (Lorem ipsum, TODO, XXX) | ✅ 0 Vorkommen |
+
+⚠️ **Hinweis:** `index.html:145` enthält redaktionellen Kommentar: `<!-- REDAKTIONELL: Öffnungszeiten Pro Mente Sana periodisch prüfen -->` — Dies ist ein gewollter Wartungshinweis, kein Fehler.
+
+---
+
+## C — Visuelle Konsistenz
+
+### C1 — Typografie
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Font-Deklaration | ✅ Lora (serif, 400/600) + Source Sans 3 (sans, 400/600) |
+| Font-Loading | ✅ Self-hosted WOFF2, `font-display: swap` |
+| Preloading | ✅ 2 kritische Fonts per `<link rel="preload">` |
+| Skala | ✅ Konsistente CSS Custom Properties (--fs-xs bis --fs-h1) |
+
+### C2 — Farben
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| CSS Custom Properties | ✅ 7 Modul-Farben (--m1 bis --m7), Danger-System, Hintergrund-System |
+| Kontrast | ✅ Text #282420 auf #f7f5f2 = hoher Kontrast |
+| Semantische Farben | ✅ --danger, --danger-dark, --danger-light konsistent |
+
+### C3 — SVG
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| SVG-Accessibility | ✅ Interactive SVGs in modul/4 haben aria-label und role="button" |
+
+---
+
+## D — Funktionalität
+
+### D1 — Notfall-Button
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Vorhanden auf allen Seiten | ✅ 13/13 Dateien |
+| Notfallnummern korrekt | ✅ 117 (Polizei), 144 (Sanität), 143 (Dargebotene Hand), 0800 33 66 55 (Psych. Notfall ZH) |
+| JS-Toggle funktional | ✅ toggleNotfall() mit aria-expanded |
+| Schliessen-Button | ✅ Vorhanden |
+
+### D2 — Navigation
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Hamburger-Menu | ✅ toggleNav(), CSS-Transition |
+| Mobile-Breakpoint | ✅ @media (max-width: 768px) |
+| Scroll-Spy | ✅ updateScrollSpy() mit .active Klasse |
+| Lesezeichen-Panel | ✅ toggleBookmarks() mit localStorage |
+
+### D3 — Suche
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Suchfunktion | ✅ Ctrl/Cmd+K, Volltext über SEARCH_INDEX |
+| search-index.js | ✅ Korrekt aufgebaut (m, mt, s, t, u Felder) |
+| Escape-Handler | ✅ Schliesst Such-Overlay |
+
+### D4 — Lightbox
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Handout-Lightbox | ✅ openHandoutLightbox() / closeHandoutLightbox() |
+| Schliessen-Button | ✅ Vorhanden |
+| Escape-Key | ✅ Handler in main.js:444-448 |
+| Overlay-Click-to-Close | ✅ main.js:413 |
+
+### D5 — Service Worker / PWA
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| SW-Registrierung | ✅ Auf allen Seiten |
+| sw.js | ✅ Cache-First mit Network-Update, 24 Core-Assets |
+| manifest.json | ✅ Name, Icons (192+512), display: standalone, lang: de-CH |
+
+---
+
+## E — Accessibility
+
+### E1 — Heading-Hierarchie
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Genau 1x h1 pro Seite | ✅ 13/13 Dateien |
+| Hierarchie korrekt (h1 → h2 → h3) | ✅ Keine Sprünge gefunden |
+
+### E2 — ARIA
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| aria-expanded auf Toggles | ✅ Notfall-Button, Akkordeons, FAQ |
+| aria-controls | ✅ notfall-trigger → notfall-banner |
+| aria-label auf Buttons | ✅ Menü, Suche, Schliessen-Buttons |
+| role="region" | ✅ Notfall-Banner |
+| role="button" + tabindex="0" | ✅ Interaktive Elemente (Modul 2/4) |
+
+### E3 — Skip-Links
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Skip-to-content | ✅ Auf allen 13 Seiten |
+| Ziel-IDs vorhanden | ✅ #module-overview, #module-content, #main-content, #main |
+
+### E4 — Tastatur
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Positive tabindex-Werte | ✅ Keine (nur tabindex="0") |
+| Keyboard-Handler (onkeydown) | ✅ Enter/Space auf interaktiven Elementen |
+| Escape-Handler | ✅ Tooltips, Suche, Lightbox |
+
+### E5 — Reduced Motion
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| prefers-reduced-motion | ✅ 2 Media-Query-Blöcke in shared.css |
+
+---
+
+## F — Performance / Deployment
+
+### F1 — Dateigrössen
+
+| Datei | Grösse | Status |
+|-------|--------|--------|
+| shared.css | 162 KB | ✅ Akzeptabel (Netlify GZIP: ~30 KB) |
+| search-index.js | 62 KB | ✅ |
+| Grösste HTML (modul/6) | 61 KB | ✅ |
+| Grösste PDF (b7_behandlung_ambivalenz) | 1.6 MB | ✅ Download-Datei |
+
+### F2 — Assets
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| OG-Images (og-index, og-m1..m7, og-impressum) | ✅ Alle vorhanden |
+| Handout-Thumbnails (WebP) | ✅ Vorhanden in /images/thumbs/ |
+| Icons (192, 512) | ✅ Vorhanden in /images/ |
+| Fonts (4x WOFF2) | ✅ Vorhanden in /fonts/ |
+
+### F3 — Fonts
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Self-hosted (kein Google Fonts CDN) | ✅ |
+| font-display: swap | ✅ |
+| Preload kritischer Fonts | ✅ |
+
+### F4 — Deployment-Dateien
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| robots.txt | ✅ Allow: /, Disallow: /handouts-legacy/, /reports/ |
+| sitemap.xml | ✅ 12 URLs, alle auf korrekte Domain |
+| _redirects | ✅ 12 Redirect-Regeln (Shortcuts + alte Pfade) |
+| 404.html | ✅ Custom Error-Page mit Navigation |
+
+---
+
+## G — SEO und Meta
+
+### G1 — Title und Description
+
+| Seite | Title | Description |
+|-------|-------|-------------|
+| index.html | ✅ 62 Zeichen | ✅ 155 Zeichen |
+| modul/1-7 | ✅ Eindeutig je Modul | ✅ Eindeutig je Modul |
+| handouts/ | ✅ | ✅ |
+| handouts/notfall/ | ✅ | ✅ |
+| handouts/ressourcen/ | ✅ | ✅ |
+| handouts/impressum/ | ✅ | ✅ |
+| 404.html | ✅ | ✅ (noindex) |
+
+### G2 — Canonical URLs
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Alle 13 Seiten | ✅ Canonical auf bipolare-erkrankung-angehoerige.netlify.app |
+| Konsistenz | ✅ 80 URL-Referenzen auf korrekte Domain |
+
+### G3 — Open Graph / Twitter Cards
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| og:title | ✅ 13/13 |
+| og:description | ✅ 13/13 |
+| og:url | ✅ 13/13 |
+| og:image + Dimensionen | ✅ 13/13 (1200x630) |
+| twitter:card | ✅ 13/13 (summary_large_image) |
+| twitter:image | ✅ 13/13 |
+
+### G4 — JSON-LD Structured Data
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| index.html | ✅ MedicalWebPage, Hospital publisher, PeopleAudience |
+| modul/1-7 | ✅ Vorhanden (8 Dateien) |
+| Handout-Seiten | ⚠️ Kein JSON-LD (nicht kritisch) |
+
+---
+
+## H — Sicherheit und Datenschutz
+
+### H1 — Externe Ressourcen
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Externe Scripts | ✅ 0 (kein Analytics, kein CDN) |
+| Externe Stylesheets | ✅ 0 (Fonts self-hosted) |
+| Externe iframes | ✅ 0 |
+| Tracking | ✅ Keines |
+
+### H2 — Impressum / Datenschutz
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Herausgeberin (PUK ZH) | ✅ |
+| Adresse | ✅ Lenggstrasse 31, 8032 Zürich |
+| Telefon | ✅ +41 58 384 38 00 |
+| E-Mail | ✅ Anti-Scrape JS (angehoerige@pukzh.ch) |
+| Inhaltliche Verantwortung | ✅ Ch. Egger |
+| Haftungsausschluss | ✅ |
+| Datenschutz | ✅ |
+| Urheberrecht | ✅ |
+
+### H3 — Sensible Daten
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| API-Keys / Tokens | ✅ Keine |
+| Hartcodierte E-Mails | ✅ Nur via JS-Anti-Scrape |
+| .gitignore | ✅ Vorhanden |
+| Sensible Kommentare | ✅ Keine |
+
+---
+
+## I — Verifizierung früherer Fixes
+
+| # | Prüfung | Ergebnis |
+|---|---------|----------|
+| I1 | Kein Eszett (ß) → "ss" | ✅ 0 Vorkommen in Code |
+| I2 | Canonical URLs auf korrekte Domain | ✅ 13/13 Seiten |
+| I3 | og:url auf korrekte Domain | ✅ 13/13 |
+| I4 | og:image auf korrekte Domain | ✅ 13/13 |
+| I5 | sitemap.xml korrekte URLs | ✅ 12 URLs |
+| I6 | robots.txt → korrekte Sitemap-URL | ✅ |
+| I7 | Keine Referenzen zu bipolar-angehoerige01 | ✅ 0 in Code-Dateien |
+| I8 | Keine Referenzen zu bipolar-psychoedukation-puk | ✅ 0 in Code-Dateien |
+| I9 | search-index.js: "ss" statt "ß" | ✅ |
+| I10 | Print-Stylesheet | ✅ @media print in shared.css:3385 |
+| I11 | JSON-LD korrekte URL | ✅ |
+| I12 | Twitter Card URLs korrekt | ✅ 13/13 |
+
+---
+
+## Empfehlungen (nicht-blockierend)
+
+1. **JSON-LD für Handout-Seiten** — Handouts, Notfall, Ressourcen, Impressum haben kein JSON-LD. Für SEO empfehlenswert aber nicht zwingend.
+2. **CSS-Optimierung** — shared.css (162 KB) könnte bei Bedarf minifiziert werden. Netlify GZIP reduziert auf ~30 KB.
+3. **Redaktioneller Kommentar** — `index.html:145`: Pro Mente Sana Öffnungszeiten periodisch prüfen (gewollter Wartungshinweis).
+4. **Alte Audit-Reports** — `WEBSITE-ANALYSE-REPORT.md`, `SVG-AUDIT-REPORT.md`, `AUDIT-SPACING-REPORT.md` enthalten noch alte URLs. Bereinigen oder in `/reports/` verschieben (bereits in robots.txt blockiert).
+
+---
+
+**Ergebnis: ✅ BEREIT FÜR PUBLIKATION**
+
+Alle 9 Prüfbereiche bestanden. 0 Blocker, 0 kritische Fehler. Die Website kann veröffentlicht werden.
