@@ -133,6 +133,7 @@ function toggleWhy(btn) {
   var why = row.querySelector('.boundary-why');
   if (!why) return;
   var open = why.classList.toggle('open');
+  btn.setAttribute('aria-expanded', String(open));
   btn.textContent = open ? '✕ Schliessen' : '💡 Warum ist das besser?';
 }
 
@@ -153,18 +154,21 @@ function toggleReadmode() {
 
 // #15 Nummer kopieren
 function copyNum(num, btn) {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(num).then(function() {
-        btn.textContent = '✓ Kopiert';
-        btn.classList.add('copied');
-        setTimeout(function() {
-          btn.textContent = '📋 Kopieren';
-          btn.classList.remove('copied');
-        }, 2000);
-      });
-    }
-  } catch(e) {}
+  function onCopied() {
+    btn.textContent = '✓ Kopiert';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '📋 Kopieren';
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(num).then(onCopied).catch(function() {
+      fallbackCopy(num, onCopied);
+    });
+  } else {
+    fallbackCopy(num, onCopied);
+  }
 }
 
 // #16 Weiter-lesen — multi-page aware
@@ -322,16 +326,30 @@ function giveFeedback(btn, module, val) {
 // #20 Teilen
 function shareSection(id, btn) {
   var url = window.location.href.split('#')[0] + '#' + id;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(function() {
-      btn.textContent = '✓ Link kopiert';
-      btn.classList.add('copied');
-      setTimeout(function() {
-        btn.textContent = '🔗 Teilen';
-        btn.classList.remove('copied');
-      }, 2500);
-    });
+  function onCopied() {
+    btn.textContent = '✓ Link kopiert';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '🔗 Teilen';
+      btn.classList.remove('copied');
+    }, 2500);
   }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(onCopied).catch(function() {
+      fallbackCopy(url, onCopied);
+    });
+  } else {
+    fallbackCopy(url, onCopied);
+  }
+}
+function fallbackCopy(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); cb(); } catch(e) {}
+  document.body.removeChild(ta);
 }
 
 // Nav toggle (hamburger)
@@ -519,10 +537,12 @@ function toggleAcc(btn) {
     if (s !== item) {
       s.classList.remove('open');
       s.querySelector('.acc-body').classList.remove('open');
+      s.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
     }
   });
   item.classList.toggle('open', !isOpen);
   body.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
   if (!isOpen) {
     setTimeout(function() {
       item.scrollIntoView({behavior: 'smooth', block: 'nearest'});
@@ -592,6 +612,7 @@ function togglePD(btn) {
   var isOpen = full.classList.contains('open');
   full.classList.toggle('open', !isOpen);
   btn.classList.toggle('open', !isOpen);
+  btn.setAttribute('aria-expanded', String(!isOpen));
   var chevron = btn.querySelector('.pd-chevron');
   if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
   if (!isOpen) {
