@@ -48,11 +48,16 @@
   --fs-h2:    1.4rem;   /* 22.4px — Sektions-Überschriften */
   --fs-h1:    1.7rem;   /* 27.2px — Seiten-Titel */
 
-  /* Spacing-Skala (4-Stufen) */
+  /* Spacing-Skala (7-Stufen) */
+  --sp-2xs:   0.25rem;  /* 4px — Micro-Abstände, Badges */
   --sp-xs:    0.4rem;   /* 6.4px */
+  --sp-half:  0.5rem;   /* 8px — Kompakte Abstände */
   --sp-sm:    0.8rem;   /* 12.8px */
+  --sp-1:     1rem;     /* 16px — Standard-Abstand */
   --sp-md:    1.2rem;   /* 19.2px */
+  --sp-ml:    1.5rem;   /* 24px — Zwischen-Sektionen */
   --sp-lg:    2rem;     /* 32px */
+  --sp-xl:    3rem;     /* 48px — Grosse Sektions-Abstände */
 
   /* ── Semantische Gefahrfarben (konsolidiert) ── */
   --danger:       #b03030;
@@ -4880,7 +4885,7 @@ details.inline-mg ul li {
 }
 .handout-lb-title {
   color: #fff;
-  font-size: 1.1rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   text-align: center;
 }
@@ -5609,6 +5614,23 @@ details.inline-mg ul li {
   line-height: 1.5;
 }
 
+/* Quick-Links (unterhalb Module-Grid) */
+.quick-links {
+  margin-top: var(--sp-lg);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* Modul-Card CTA-Link */
+.mc-cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: var(--fs-sm);
+  color: var(--module-color, var(--muted));
+  font-weight: 600;
+}
+
 /* Krisennummer-Link */
 .crisis-link {
   font-weight: 700;
@@ -5756,3 +5778,38 @@ details.inline-mg ul li {
 .module-grid { display: grid; gap: var(--sp-sm); }
 .section-intro { font-family: "Lora", Georgia, serif; font-size: var(--fs-lg); margin-bottom: 0.5rem; }
 .text-sm-muted-mb { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 1rem; }
+
+/* ============================================================
+   UNUSED CSS CLASSES — Audit 2026-03-02
+   ============================================================
+   Die folgenden Klassen sind in keiner HTML- oder JS-Datei
+   referenziert. NICHT LÖSCHEN in dieser Runde — erst nach
+   visuellem Review entfernen.
+
+   Durch dieses Audit verwaist (HTML-Elemente entfernt):
+     .module-ctas        (L353)  — A3: Navigationsblock entfernt
+     .cta-btn            (L359)  — A3: Buttons in module-ctas
+     .module-number      (L413)  — A1: Dekorative Modulziffer entfernt
+     .hero-readtime      (L1570) — A2: Doppelte Lesezeit entfernt
+     .erosion-icon       (L827)  — B1: Dekorative Emoji-Container entfernt
+     .is-icon            (L2738) — B1: Dekorative Emoji-Container entfernt
+
+   Bereits vor Audit ungenutzt:
+     .placeholder        (L440)
+     .placeholder-icon   (L450)
+     .placeholder-label  (L451)
+     .ee-bottom-row      (L1138)
+     .bottom-center      (L1139)
+     .pdf-placeholder-box(L3392)
+     .notfall-bar        (L3393) — Compound-Selektor mit .sos-banner
+     .sos-banner         (L3393)
+     .reflexion          (L3412)
+     .bookmarks-panel    (L3525) — HTML nutzt id="bookmarks-panel", nicht class
+     .quiz-block         (L4668)
+     .handout-card       (L4674)
+     .disabled           (L5034)
+     .bottom-left        (L5534)
+     .bottom-right       (L5535)
+
+   Total: 21 ungenutzte Klassen (6 durch Audit, 15 vorher)
+   ============================================================ */
