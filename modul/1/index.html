@@ -648,12 +648,12 @@
       <span class="hv-sub">Kurz — nie<br>vollständig</span>
     </div>
   </div>
-  <!-- Step dots -->
-  <div class="hv-steps" aria-hidden="true">
-    <span class="hv-step-dot" onclick="hvToggle('beobachten')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('anspannung')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('erschoepfung')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('erholung')"></span>
+  <!-- Step dots (duplicate nav for the 4 stations above) -->
+  <div class="hv-steps">
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Beobachten" onclick="hvToggle('beobachten')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('beobachten')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Anspannung" onclick="hvToggle('anspannung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('anspannung')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Erschöpfung" onclick="hvToggle('erschoepfung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('erschoepfung')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Erholung" onclick="hvToggle('erholung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('erholung')}"></span>
   </div>
   <!-- Note -->
   <div class="hv-note">
