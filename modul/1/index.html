@@ -448,7 +448,7 @@
 <div class="suicide-risk-item">
 <span class="srisk-icon">🔄</span>
 <div>
-<strong><span class="tt" tabindex="0">Rapid Cycling<span class="tt-box">Vier oder mehr Stimmungsphasen pro Jahr. Die schnellen Wechsel geben kaum Erholungszeit und erhöhen das Suizidrisiko deutlich.</span></span></strong><br/>
+<strong><span class="tt" tabindex="0" lang="en">Rapid Cycling<span class="tt-box" lang="de-CH">Vier oder mehr Stimmungsphasen pro Jahr. Die schnellen Wechsel geben kaum Erholungszeit und erhöhen das Suizidrisiko deutlich.</span></span></strong><br/>
 <span class="srisk-text">Schnelle Phasenwechsel destabilisieren stark</span>
 </div>
 </div>
@@ -648,12 +648,12 @@
       <span class="hv-sub">Kurz — nie<br>vollständig</span>
     </div>
   </div>
-  <!-- Step dots -->
-  <div class="hv-steps" aria-hidden="true">
-    <span class="hv-step-dot" onclick="hvToggle('beobachten')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('anspannung')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('erschoepfung')"></span>
-    <span class="hv-step-dot" onclick="hvToggle('erholung')"></span>
+  <!-- Step dots (duplicate nav for the 4 stations above) -->
+  <div class="hv-steps">
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Beobachten" onclick="hvToggle('beobachten')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('beobachten')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Anspannung" onclick="hvToggle('anspannung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('anspannung')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Erschöpfung" onclick="hvToggle('erschoepfung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('erschoepfung')}"></span>
+    <span class="hv-step-dot" tabindex="0" role="button" aria-label="Erholung" onclick="hvToggle('erholung')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();hvToggle('erholung')}"></span>
   </div>
   <!-- Note -->
   <div class="hv-note">
@@ -795,7 +795,7 @@
 </div>
 </div>
 <div style="font-size:var(--fs-sm);color:var(--muted);margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(74,107,138,0.2);">
-→ Details: <a download="" href="/handouts/b7_behandlung_ambivalenz.pdf" class="text-m4">Handout: Behandlung &amp; Ambivalenz</a> · <a href="/modul/5/" class="text-m5">Modul 5 (Handeln)</a>
+→ Details: <a href="/handouts/b7_behandlung_ambivalenz.pdf" class="text-m4">Handout: Behandlung &amp; Ambivalenz</a> · <a href="/modul/5/" class="text-m5">Modul 5 (Handeln)</a>
 </div>
 </div>
 <div class="exp-report">

@@ -1,4 +1,11 @@
 
+/* Escape HTML to prevent XSS when inserting dynamic text via innerHTML */
+function escHtml(str) {
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+
 /* Tooltip keyboard accessibility: Escape to dismiss */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
@@ -12,6 +19,7 @@ document.addEventListener('keydown', function(e) {
 // Notfall-Banner
 function toggleNotfall(triggerBtn) {
   var banner = document.getElementById('notfall-banner');
+  if (!banner) return;
   var isOpen = banner.classList.contains('open');
   banner.classList.toggle('open', !isOpen);
   triggerBtn.classList.toggle('open', !isOpen);
@@ -197,7 +205,7 @@ function initContinue() {
         var btn = document.getElementById('continue-reading');
         if (btn) {
           btn.style.display = 'block';
-          btn.innerHTML = '<span class="cr-label">Weiter lesen</span>→ ' + saved.title + '…';
+          btn.innerHTML = '<span class="cr-label">Weiter lesen</span>→ ' + escHtml(saved.title) + '…';
           btn.onclick = function() {
             window.scrollTo({ top: saved.scroll, behavior: 'smooth' });
             btn.style.display = 'none';
@@ -210,7 +218,7 @@ function initContinue() {
       var btn = document.getElementById('continue-reading');
       if (btn) {
         btn.style.display = 'block';
-        btn.innerHTML = '<span class="cr-label">Weiter lesen</span>→ ' + saved.title + '…';
+        btn.innerHTML = '<span class="cr-label">Weiter lesen</span>→ ' + escHtml(saved.title) + '…';
         btn.onclick = function() {
           window.location.href = saved.url;
         };
@@ -388,6 +396,25 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   } catch(e) {}
+  // Wire tooltip ARIA: add role="tooltip" + aria-describedby
+  document.querySelectorAll('.tt').forEach(function(tt, i) {
+    var box = tt.querySelector('.tt-box');
+    if (box) {
+      var id = 'tt-' + i;
+      box.id = id;
+      box.setAttribute('role', 'tooltip');
+      tt.setAttribute('aria-describedby', id);
+    }
+  });
+  // Init rgt-marker animation (Rollengrammatik)
+  var marker = document.getElementById('rgt-marker');
+  if (marker) {
+    marker.style.left = '8%';
+    setTimeout(function() {
+      marker.style.transition = 'left 1.8s cubic-bezier(0.4,0,0.2,1)';
+      marker.style.left = '92%';
+    }, 600);
+  }
 });
 
 function showPole(pole) {
@@ -498,17 +525,6 @@ function setRoleStage(stage) {
   if (marker) marker.style.left = positions[stage];
 }
 
-// Init: Marker auf Stage 3 (rechts) setzen
-document.addEventListener('DOMContentLoaded', function() {
-  var marker = document.getElementById('rgt-marker');
-  if (marker) {
-    marker.style.left = '92%';
-    setTimeout(function() {
-      marker.style.transition = 'left 1.8s cubic-bezier(0.4,0,0.2,1)';
-      marker.style.left = '92%';
-    }, 600);
-  }
-});
 
 function highlightEE(n) {
   document.querySelectorAll('.ee-node').forEach(function(node) {
@@ -530,6 +546,7 @@ function highlightEE(n) {
 // Accordion
 function toggleAcc(btn) {
   var item = btn.closest('.acc-item');
+  if (!item) return;
   var body = item.querySelector('.acc-body');
   var isOpen = item.classList.contains('open');
   var siblings = item.parentElement.querySelectorAll('.acc-item.open');
@@ -556,17 +573,16 @@ function filterHandouts(category) {
     c.classList.toggle('active', c.dataset.filter === category);
   });
   document.querySelectorAll('.pdf-card').forEach(function(card) {
-    if (category === 'alle' || card.dataset.category === category) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
+    var show = category === 'alle' || card.dataset.category === category;
+    var wrap = card.closest('.card-wrap');
+    (wrap || card).style.display = show ? '' : 'none';
   });
 }
 
 // FAQ-Akkordeon
 function toggleFaq(btn) {
   var item = btn.closest('.faq-item');
+  if (!item) return;
   var wasOpen = item.classList.contains('open');
   item.parentElement.querySelectorAll('.faq-item.open').forEach(function(i) {
     i.classList.remove('open');
@@ -581,6 +597,7 @@ function toggleFaq(btn) {
 // Glossar-Akkordeon
 function toggleGlossar(btn) {
   var item = btn.closest('.glossar-item');
+  if (!item) return;
   var wasOpen = item.classList.contains('open');
   item.parentElement.querySelectorAll('.glossar-item.open').forEach(function(i) {
     i.classList.remove('open');
@@ -595,6 +612,7 @@ function toggleGlossar(btn) {
 // Notfall Mini-Guide Akkordeon
 function toggleMG(btn) {
   var guide = btn.closest('.mini-guide');
+  if (!guide) return;
   var wasOpen = guide.classList.contains('open');
   guide.parentElement.querySelectorAll('.mini-guide.open').forEach(function(g) {
     g.classList.remove('open');
@@ -609,6 +627,7 @@ function toggleMG(btn) {
 // Progressive Disclosure
 function togglePD(btn) {
   var full = document.getElementById(btn.dataset.target);
+  if (!full) return;
   var isOpen = full.classList.contains('open');
   full.classList.toggle('open', !isOpen);
   btn.classList.toggle('open', !isOpen);
