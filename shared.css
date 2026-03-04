@@ -410,9 +410,18 @@ nav {
   margin: 0 auto 0;
   padding: 0 1.5rem;
 }
+.module + .module {
+  padding-top: 0;
+}
+.module + .module::before {
+  content: '';
+  display: block;
+  height: 3rem;
+}
 .module-card {
   background: var(--white);
   border-radius: var(--radius);
+  box-shadow: 0 6px 36px rgba(40,36,32,0.07), 0 1px 4px rgba(40,36,32,0.04);
 }
 .module-header {
   padding: var(--sp-lg) 2rem 1.5rem;
@@ -1713,16 +1722,6 @@ footer {
   font-style: italic;
 }
 .exp-body {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 0;
-  padding: 1.6rem 1.6rem 1.2rem;
-  align-items: start;
-  position: relative;
-  z-index: 1;
-}
-.exp-body-single,
-.exp-body:not(:has(.exp-phase)) {
   display: block;
   padding: 1.6rem 1.6rem 1.2rem;
   position: relative;
@@ -1733,8 +1732,19 @@ footer {
   font-family: 'Lora', Georgia, serif;
   font-style: italic;
 }
+/* Phase-grid layout: only when exp-phase children present */
+.exp-body:has(.exp-phase) {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: start;
+  font-size: unset;
+  line-height: unset;
+  font-family: unset;
+  font-style: unset;
+}
 @media (max-width: 640px) {
-  .exp-body {
+  .exp-body:has(.exp-phase) {
     grid-template-columns: 1fr;
     padding: 1.2rem;
   }
