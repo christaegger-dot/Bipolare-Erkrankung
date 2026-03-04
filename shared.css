@@ -732,8 +732,8 @@ footer {
   .svg-scroll-mobile {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin: 0 -1rem;
-    padding: 0 1rem;
+    margin: 0 -0.625rem;
+    padding: 0 0.625rem;
   }
   .svg-scroll-mobile svg {
     min-width: 500px;
@@ -2879,10 +2879,12 @@ footer {
    RESPONSIVE
 ───────────────────────────────────────── */
 @media (max-width: 600px) {
+  .module { padding: 0 0.5rem; }
+  .hero { padding: 3rem 1rem 2rem; }
   .module-header { flex-direction: column; gap: 0.5rem; }
   .module-number { font-size: var(--fs-h1); }
-  .module-body { padding: var(--sp-md); }
-  .module-header { padding: 1.4rem 1.2rem 1rem; }
+  .module-body { padding: var(--sp-md) 0.625rem; }
+  .module-header { padding: 1.4rem 0.625rem 1rem; }
   .footer-inner { grid-template-columns: 1fr; }
   .footer-right { text-align: left; }
   .burden-label { width: 160px; font-size: var(--fs-xs); }
