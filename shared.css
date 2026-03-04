@@ -70,6 +70,15 @@
   --danger-light: #fceaea;
   --danger-hover: #922b21;
 
+  /* ── Erfolg/Richtig ── */
+  --success:       #2D6A4F;
+  --success-dark:  #1a4a30;
+  --success-light: #d8f3dc;
+  --success-bg:    #1a3a20;  /* dark-mode */
+
+  /* ── Warnung ── */
+  --warn-border:   #e0a030;
+
   /* ── Manie-spezifisch (orange-rosa, bewusst anders als Gefahrrot) ── */
   --manie-bg:      #fde8e0;
   --manie-text:    #a04020;
@@ -1174,7 +1183,7 @@ footer {
 }
 .mk-num {
   background: var(--m4);
-  color: #fff;
+  color: var(--white);
   font-weight: 700;
   font-size: var(--fs-md);
   min-width: 2rem;
@@ -1909,7 +1918,7 @@ footer {
 ───────────────────────────────────────── */
 .suicide-notice {
   background: var(--warn-bg);
-  border-left: 4px solid #e0a030;
+  border-left: 4px solid var(--warn-border);
   border-radius: 8px;
   padding: var(--sp-sm) 1rem;
   font-size: var(--fs-sm);
@@ -2250,7 +2259,7 @@ footer {
   padding: 1rem var(--sp-md);
 }
 .schwei-title { font-weight: 600; font-size: var(--fs-base); margin-bottom: 0.5rem; color: var(--schwei-blue); }
-.schwei-text { font-size: var(--fs-sm); line-height: 1.6; color: #333; margin-bottom: 0.75rem; }
+.schwei-text { font-size: var(--fs-sm); line-height: 1.6; color: var(--text); margin-bottom: 0.75rem; }
 .schwei-important {
   display: flex;
   gap: 0.5rem;
@@ -2269,11 +2278,11 @@ footer {
   align-items: flex-start;
   font-size: var(--fs-sm);
   line-height: 1.55;
-  color: #333;
+  color: var(--text);
 }
 .ss-num {
   background: var(--schwei-blue);
-  color: #fff;
+  color: var(--white);
   font-weight: 700;
   font-size: var(--fs-xs);
   min-width: 1.4rem;
@@ -4650,7 +4659,7 @@ details.inline-mg ul li {
   .module-card, .card, .lernziele { background: var(--bg2); border-color: var(--bg3); }
   .vignette { background: rgba(255,255,255,0.04); }
   .notfall-num-card { background: var(--bg2); }
-  .module-number { color: #fff; }
+  .module-number { color: var(--white); }
   a { color: var(--m1); }
   .breadcrumb a { color: var(--m1); }
   .pd-dot { background: var(--bg3); }
@@ -4678,12 +4687,12 @@ details.inline-mg ul li {
   .search-box { background: var(--bg); border-color: var(--bg3); }
   .search-input { background: var(--bg2); color: var(--text); border-color: var(--bg3); }
   .module-end-next { background: var(--bg2); }
-  .men-link:hover { color: #fff; }
+  .men-link:hover { color: var(--white); }
   .wissens-anker { background: var(--bg2); }
   .wa-opt { background: var(--bg); border-color: var(--bg3); color: var(--text); }
-  .wa-opt.correct { background: #1a3a20; color: #a0d8a0; border-color: #2D6A4F; }
-  .wa-opt.wrong { background: #3a1818; color: #d8a0a0; border-color: #c1121f; }
-  .wa-feedback.correct { background: #1a3a20; color: #a0d8a0; }
+  .wa-opt.correct { background: var(--success-bg); color: #a0d8a0; border-color: var(--success); }
+  .wa-opt.wrong { background: #3a1818; color: #d8a0a0; border-color: var(--danger); }
+  .wa-feedback.correct { background: var(--success-bg); color: #a0d8a0; }
   .wa-feedback.wrong { background: #3a1818; color: #d8a0a0; }
   .section-wave { color: var(--bg3); }
 
@@ -4866,7 +4875,7 @@ details.inline-mg ul li {
   right: -0.5rem;
   background: none;
   border: none;
-  color: #fff;
+  color: var(--white);
   font-size: 2rem;
   cursor: pointer;
   line-height: 1;
@@ -4879,10 +4888,10 @@ details.inline-mg ul li {
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   object-fit: contain;
-  background: #fff;
+  background: var(--white);
 }
 .handout-lb-title {
-  color: #fff;
+  color: var(--white);
   font-size: var(--fs-lg);
   font-weight: 600;
   text-align: center;
@@ -4893,7 +4902,7 @@ details.inline-mg ul li {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: var(--m1);
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
   border-radius: 6px;
   font-weight: 600;
@@ -4945,7 +4954,7 @@ details.inline-mg ul li {
 }
 .men-link:hover {
   background: var(--module-color, var(--m1));
-  color: #fff;
+  color: var(--white);
 }
 
 /* ═══════════ FIX #23: SECTION-WAVE ═══════════ */
@@ -5020,14 +5029,14 @@ details.inline-mg ul li {
   border-color: var(--module-color, var(--m1));
 }
 .wa-opt.correct {
-  background: #d8f3dc;
-  border-color: #2D6A4F;
-  color: #1a4a30;
+  background: var(--success-light);
+  border-color: var(--success);
+  color: var(--success-dark);
 }
 .wa-opt.wrong {
-  background: #fceaea;
-  border-color: #c1121f;
-  color: #7a1a1a;
+  background: var(--danger-light);
+  border-color: var(--danger);
+  color: var(--danger-dark);
 }
 .wa-opt.disabled {
   opacity: 0.5;
@@ -5044,12 +5053,12 @@ details.inline-mg ul li {
   display: block;
 }
 .wa-feedback.correct {
-  background: #d8f3dc;
-  color: #1a4a30;
+  background: var(--success-light);
+  color: var(--success-dark);
 }
 .wa-feedback.wrong {
-  background: #fceaea;
-  color: #7a1a1a;
+  background: var(--danger-light);
+  color: var(--danger-dark);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -5328,7 +5337,7 @@ details.inline-mg ul li {
   margin-top: 1.5rem;
   padding: 0.75rem 1.4rem;
   background: var(--m1);
-  color: #fff;
+  color: var(--white);
   border-radius: var(--radius);
   text-decoration: none;
   font-weight: 600;
@@ -5824,7 +5833,7 @@ details.inline-mg ul li {
   align-items: center;
   gap: 6px;
   padding: 8px 14px 8px 10px;
-  background: #fff;
+  background: var(--white);
   border: 1.5px solid var(--kp-border);
   border-radius: 24px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);

@@ -396,6 +396,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   } catch(e) {}
+  // Wire tooltip ARIA: add role="tooltip" + aria-describedby
+  document.querySelectorAll('.tt').forEach(function(tt, i) {
+    var box = tt.querySelector('.tt-box');
+    if (box) {
+      var id = 'tt-' + i;
+      box.id = id;
+      box.setAttribute('role', 'tooltip');
+      tt.setAttribute('aria-describedby', id);
+    }
+  });
   // Init rgt-marker animation (Rollengrammatik)
   var marker = document.getElementById('rgt-marker');
   if (marker) {
