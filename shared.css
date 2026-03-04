@@ -33,7 +33,7 @@
   --indigo:   #4338CA;   /* Akzentfarbe für Tooltips & Highlights */
   --m7-light: #dde8ee;
 
-  --radius:   14px;
+  --radius:   10px;
   --shadow:   0 4px 28px rgba(40,36,32,0.08);
 
   /* Typografie-Skala (5 Stufen) */
@@ -336,7 +336,7 @@ nav {
 /* Hoffnungsanker */
 .hope-banner {
   background: linear-gradient(135deg, var(--m6-light), var(--bg));
-  border-radius: 14px;
+  border-radius: var(--radius);
   border-left: 4px solid var(--m6);
   padding: 1.1rem 1.5rem;
   max-width: 640px;
@@ -879,6 +879,7 @@ footer {
   position: relative;
 }
 .quote-card::before { content: '«'; font-size: 3.5rem; opacity: 0.22; position: absolute; top: -0.3rem; left: 0.4rem; font-family: 'Lora', Georgia, serif; line-height: 1; color: inherit; }
+.m1-quote { background: var(--m1-light); border-left: 3px solid var(--m1); padding-left: 2rem; }
 .m2-quote { background: var(--m2-light); border-left: 3px solid var(--m2); padding-left: 2rem; }
 
 .erosion-cards {
