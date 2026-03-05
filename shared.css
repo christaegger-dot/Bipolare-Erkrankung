@@ -6023,3 +6023,142 @@ details.collapsible > .collapsible-body {
   margin-top: 0.25rem;
   font-family: 'Source Sans 3', sans-serif;
 }
+
+/* ─────────────────────────────────────────
+   ACCORDION (Native Details/Summary)
+   Optimiert für iOS & Barrierefreiheit
+───────────────────────────────────────── */
+details.acc-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: var(--sp-sm);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  display: block;
+}
+
+details.acc-item[open] {
+  box-shadow: var(--shadow-md);
+  border-color: var(--module-color, var(--m1));
+}
+
+summary.acc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-md);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  outline: none;
+}
+
+summary.acc-header::-webkit-details-marker {
+  display: none;
+}
+
+summary.acc-header:focus-visible {
+  background: var(--bg-alt);
+}
+
+.acc-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  flex: 1;
+}
+
+.acc-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.acc-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.acc-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.acc-chevron {
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: transform 0.3s;
+  margin-left: var(--sp-sm);
+}
+
+details.acc-item[open] .acc-chevron {
+  transform: rotate(180deg);
+}
+
+.acc-body {
+  padding: 0 var(--sp-md) var(--sp-md);
+  border-top: 1px solid var(--bg-alt);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Optimierung für Touch-Targets */
+@media (max-width: 480px) {
+  summary.acc-header {
+    padding: var(--sp-md) var(--sp-sm);
+    min-height: 56px;
+  }
+}
+
+/* Asset Meta (Handouts) */
+.asset-meta {
+  font-size: 10px;
+  color: var(--muted);
+  opacity: 0.7;
+  margin-top: 4px;
+  font-family: var(--fs-xs);
+  letter-spacing: 0.02em;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE UX OPTIMIERUNGEN (375px)
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Grössere Touch-Targets für interaktive Diagramme */
+  .pole-tab {
+    min-height: 48px;
+    padding: 0.6rem 0.4rem;
+  }
+
+  .viz-svg {
+    touch-action: manipulation;
+  }
+
+  /* Bessere Lesbarkeit in Tabellen/Grids auf Mobile */
+  .selfcare-grid, .coping-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-sm);
+  }
+
+  .kp-mock-row {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-mock-label {
+    border-right: none;
+    border-bottom: 1px solid var(--kp-paper);
+    padding: 0.4rem 0.8rem;
+  }
+
+  /* Sticky-Header Offset für Mobile */
+  :root {
+    --sticky-nav-h: 52px;
+  }
+}
