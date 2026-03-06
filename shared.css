@@ -4488,7 +4488,10 @@ details.inline-mg ul li {
 }
 .subpage-content .module > h2:first-child,
 .subpage-content .module > h2:first-of-type {
-  display: none; /* Title is in subpage-hero */
+  display: none; /* Title is in module-top */
+}
+.subpage-content .module-header {
+  display: none; /* Title + subtitle already shown in module-top */
 }
 
 /* ═══════════════════════════════════════
