@@ -1,27 +1,42 @@
-name: Auto-merge Claude Code PRs
+name: Auto-PR and merge for Claude Code
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-  check_suite:
-    types: [completed]
+  push:
+    branches:
+      - 'claude/**'
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  auto-merge:
+  create-and-merge:
     runs-on: ubuntu-latest
-    if: >
-      startsWith(github.head_ref, 'claude/') &&
-      github.event.pull_request.user.login == 'app/claude'
     steps:
-      - name: Wait for Netlify deploy
-        run: sleep 30
-
-      - name: Enable auto-merge
-        run: gh pr merge --auto --merge "<LaTex>$PR_URL"
+      - name: Create PR if none exists
+        id: create-pr
+        run: |
+          EXISTING=$(gh pr list --head "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --json number --jq '.[0].number')
+          if [ -z "$EXISTING" ]; then
+            PR_URL=$(gh pr create \
+              --repo "$GITHUB_REPOSITORY" \
+              --head "$GITHUB_REF_NAME" \
+              --base main \
+              --title "Claude Code: $(echo $GITHUB_REF_NAME | sed 's|claude/||')" \
+              --body "Automatisch erstellt von Claude Code.")
+            echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+            echo "Created PR: $PR_URL"
+          else
+            echo "pr_url=$(gh pr view $EXISTING --repo $GITHUB_REPOSITORY --json url --jq '.url')" >> $GITHUB_OUTPUT
+            echo "PR already exists: #$EXISTING"
+          fi
         env:
-          PR_URL: $</LaTex>{{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for Netlify deploy
+        run: sleep 60
+
+      - name: Merge PR
+        run: gh pr merge --merge --delete-branch "${{ steps.create-pr.outputs.pr_url }}"
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
