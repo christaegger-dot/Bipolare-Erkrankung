@@ -2634,6 +2634,12 @@ footer {
   .suicide-wrap { grid-template-columns: 1fr; }
   .suicide-stat-row { flex-direction: column; }
   .resources-grid { grid-template-columns: 1fr; }
+  .do-dont-grid { grid-template-columns: 1fr !important; }
+  .kk-grid { grid-template-columns: 1fr !important; aspect-ratio: unset !important; }
+  .sl-grid { grid-template-columns: 1fr !important; }
+  .sl-grid .sl-pillar:nth-child(5) { grid-column: auto; max-width: 100%; }
+  #back-to-top { bottom: 90px; width: 40px; height: 40px; font-size: var(--fs-base); }
+  #back-to-top.visible { opacity: 0.85; }
 }
 
 /* ═══════════════════════════════════════
