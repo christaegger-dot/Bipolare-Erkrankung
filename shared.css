@@ -1101,6 +1101,10 @@ footer {
 }
 .ee-node:hover { transform: translateY(-1px); border-color: var(--m4); }
 .ee-node.active { border-color: var(--m4); background: var(--m4-light); }
+.ee-flow-svg circle.pointer { cursor: pointer; transition: stroke 0.2s, fill 0.2s; }
+.ee-flow-svg circle.pointer:hover { stroke: #8a6a3a; stroke-width: 2.5; }
+.ee-flow-svg circle.pointer:focus-visible { outline: 2px solid #3d3530; outline-offset: 2px; }
+.ee-flow-svg circle.pointer.active { stroke: #8a6a3a; stroke-width: 3; fill: #fdf6e8; }
 .ee-bottom-row .ee-node { flex: 1; }
 .ee-node.bottom-center { width: 70%; }
 
