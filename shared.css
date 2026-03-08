@@ -3188,6 +3188,10 @@ body.readmode .slide-wrap { display: block !important; margin-bottom: 1rem; }
   .handout-section { break-before: page; }
   h1, h2, h3, .section-title-sm { break-after: avoid; }
   img { max-width: 100% !important; }
+  svg { max-width: 100% !important; height: auto !important; }
+  * { color: #000 !important; background: #fff !important; }
+  .m-insight, .quote-card { background: #f5f5f5 !important; }
+  .exp-report, .exp-body, .quote-card, .acc-item { break-inside: avoid; }
   @page { margin: 2cm 1.5cm; }
   @page:first { margin-top: 1cm; }
 }
