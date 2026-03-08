@@ -530,10 +530,10 @@ function setRoleStage(stage) {
 
 
 function highlightEE(n) {
-  document.querySelectorAll('.ee-node').forEach(function(node) {
+  document.querySelectorAll('.ee-flow-svg circle.pointer').forEach(function(node) {
     node.classList.remove('active');
   });
-  var node = document.getElementById('ee-' + n);
+  var node = document.getElementById('ee-svg-' + n);
   if (node) node.classList.add('active');
   var detail = document.getElementById('ee-detail');
   var d = eeData[n];
