@@ -5926,4 +5926,12 @@ details.acc-item[open] .acc-chevron {
   .res-urgent, .res-grid {
     grid-template-columns: 1fr;
   }
+  .resource-num {
+    font-size: 1.4rem;
+  }
+  .resource-num a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
 }
