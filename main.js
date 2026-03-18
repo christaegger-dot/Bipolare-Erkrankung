@@ -28,6 +28,8 @@ function updateProgress() {
   var pct = docH > 0 ? Math.min(100, (scrolled / docH) * 100) : 0;
   var bar = document.getElementById('progress-bar');
   if (bar) bar.style.width = pct + '%';
+  var rbar = document.querySelector('.reading-progress');
+  if (rbar) rbar.style.width = pct + '%';
 }
 
 // #2 Scroll-Spy — multi-page aware
@@ -109,8 +111,10 @@ function initSwipe() {
       showSlide(currentSlide);
     }
   }, { passive: true });
-  var _origShow = window.showSlide;
-  window.showSlide = function(n) { currentSlide = n; _origShow(n); };
+  if (!window._origShowSlide) {
+    window._origShowSlide = window.showSlide;
+    window.showSlide = function(n) { currentSlide = n; window._origShowSlide(n); };
+  }
 }
 
 // #9 Alle Phasen anzeigen/verbergen
@@ -206,7 +210,14 @@ function initContinue() {
             window.scrollTo({ top: saved.scroll, behavior: 'smooth' });
             btn.style.display = 'none';
           };
-          setTimeout(function() { btn.style.display = 'none'; }, 8000);
+          // Hide after user scrolls past threshold instead of fixed timeout
+          var _crScrollHide = function() {
+            if (window.scrollY > 200) {
+              btn.style.display = 'none';
+              window.removeEventListener('scroll', _crScrollHide);
+            }
+          };
+          window.addEventListener('scroll', _crScrollHide, { passive: true });
         }
       }
     } else {
@@ -218,7 +229,13 @@ function initContinue() {
         btn.onclick = function() {
           window.location.href = saved.url;
         };
-        setTimeout(function() { btn.style.display = 'none'; }, 8000);
+        var _crScrollHide2 = function() {
+          if (window.scrollY > 200) {
+            btn.style.display = 'none';
+            window.removeEventListener('scroll', _crScrollHide2);
+          }
+        };
+        window.addEventListener('scroll', _crScrollHide2, { passive: true });
       }
     }
   } catch(e) {}
@@ -239,11 +256,11 @@ function showScResult() {
   if (!result) return;
   var msg = '';
   if (yesCount <= 1) {
-    msg = '<div class="sc-result-title" style="color:var(--m3)">Sie sind gut aufgestellt</div>Sie scheinen Grenzen zu kennen und sich zu schützen. Nutzen Sie die Ressourcen hier, um das zu festigen — besonders <a href="/modul/6/">Modul 6 (Resilienz)</a>.';
+    msg = '<div class="sc-result-title" style="color:var(--m3)">Sie sind gut aufgestellt</div>Sie scheinen Grenzen zu kennen und sich zu schützen. Nutzen Sie die Ressourcen hier, um das zu festigen — besonders <a href="/modul/7/">Modul 7 (Resilienz)</a>.';
   } else if (yesCount <= 3) {
-    msg = '<div class="sc-result-title" style="color:var(--m4)">Sie befinden sich in der Mitte</div>Einige Warnsignale sind vorhanden. <a href="/modul/5/">Modul 5 (Selbstfürsorge und Handeln)</a> ist besonders relevant für Sie — und <a href="/modul/7/">Modul 7</a> zeigt Ihnen, wo Sie Unterstützung finden.';
+    msg = '<div class="sc-result-title" style="color:var(--m4)">Sie befinden sich in der Mitte</div>Einige Warnsignale sind vorhanden. <a href="/modul/6/">Modul 6 (Selbstfürsorge und Handeln)</a> ist besonders relevant für Sie — und <a href="/modul/8/">Modul 8</a> zeigt Ihnen, wo Sie Unterstützung finden.';
   } else {
-    msg = '<div class="sc-result-title" style="color:var(--danger)">Handlungsbedarf erkennbar</div>Mehrere Warnsignale deuten darauf hin, dass Sie sich stark verausgaben. Bitte nehmen Sie sich <a href="/modul/5/">Modul 5</a> zu Herzen und überlegen Sie, ob eine Beratung bei der <a href="/modul/7/">Fachstelle Angehörigenarbeit</a> hilfreich wäre.<br><strong>Psychiatrischer Notfalldienst ZH:</strong> <a href="tel:0800336655" style="color:var(--danger);font-weight:700;">0800 33 66 55</a> (24/7, kostenlos)';
+    msg = '<div class="sc-result-title" style="color:var(--danger)">Handlungsbedarf erkennbar</div>Mehrere Warnsignale deuten darauf hin, dass Sie sich stark verausgaben. Bitte nehmen Sie sich <a href="/modul/6/">Modul 6</a> zu Herzen und überlegen Sie, ob eine Beratung bei der <a href="/modul/8/">Fachstelle Angehörigenarbeit</a> hilfreich wäre.<br><strong>Psychiatrischer Notfalldienst ZH:</strong> <a href="tel:0800336655" style="color:var(--danger);font-weight:700;">0800 33 66 55</a> (24/7, kostenlos)';
   }
   result.innerHTML = msg;
   result.classList.add('show');
@@ -271,14 +288,15 @@ function renderBookmarksList() {
       return '<div class="bp-item"><a href="#" onclick="window.scrollTo({top:' + top + ',behavior:\'smooth\'});toggleBookmarks();return false">' + escHtml(bookmarks[k]) + '</a></div>';
     } else {
       // Cross-page bookmark: link to module page
-      var moduleNum = k.replace(/[^\d]/g, '').charAt(0);
+      var moduleMatch = k.match(/^m(\d+)/);
+      var moduleNum = moduleMatch ? moduleMatch[1] : '1';
       return '<div class="bp-item"><a href="/modul/' + moduleNum + '/">' + escHtml(bookmarks[k]) + '</a></div>';
     }
   }).join('');
 }
 
 function toggleBookmarks() {
-  var panel = document.getElementById('bookmarks-panel') || document.getElementById('bookmark-panel');
+  var panel = document.getElementById('bookmark-panel');
   if (panel) panel.classList.toggle('open');
 }
 
@@ -469,7 +487,7 @@ function openHandoutLightbox(href, title) {
     '<button class="handout-lb-close" aria-label="Schliessen">✕</button>' +
     '<img class="handout-lb-img" src="' + escHtml(thumbSrc) + '" alt="' + escHtml(title) + '">' +
     '<div class="handout-lb-title">' + escHtml(title) + '</div>' +
-    '<a class="handout-lb-download" href="' + escHtml(href) + '" download>⬇ PDF herunterladen</a>' +
+    '<a class="handout-lb-download" href="' + encodeURI(href) + '" download>⬇ PDF herunterladen</a>' +
     '</div>';
   overlay.querySelector('.handout-lb-close').onclick = closeHandoutLightbox;
   document.body.appendChild(overlay);
@@ -518,7 +536,7 @@ var eeData = {
   3: {
     title: 'Erschöpfung',
     text: 'Das Überinvolvement zehrt die eigene Kraft auf. Schlafmangel, körperliche Symptome, emotionale Taubheit. Die Toleranzschwelle sinkt — jede Kleinigkeit kann zur Belastung werden.',
-    tip: 'Ausweg: Selbstfürsorge ist keine Option, sondern Pflicht. Wenn Sie leer sind, können Sie nicht geben. <a href="/modul/5/">Modul 5</a> zeigt konkrete Strategien.'
+    tip: 'Ausweg: Selbstfürsorge ist keine Option, sondern Pflicht. Wenn Sie leer sind, können Sie nicht geben. <a href="/modul/6/">Modul 6</a> zeigt konkrete Strategien.'
   },
   4: {
     title: 'Kritik &amp; Hostilität',
@@ -563,7 +581,7 @@ function filterHandouts(category) {
   document.querySelectorAll('.pdf-card').forEach(function(card) {
     var show = category === 'alle' || card.dataset.category === category;
     var wrap = card.closest('.card-wrap');
-    (wrap || card).style.display = show ? '' : 'none';
+    (wrap || card).classList.toggle('filter-hidden', !show);
   });
 }
 
@@ -676,13 +694,9 @@ function togglePD(btn) {
 // ═══════════════════════════════════════════════════════
 
 // Feature 1: Reading Progress Bar (Modulseiten)
+// Uses updateProgress() from main scroll handler — no separate listener needed
 function initReadingProgress() {
-  var bar = document.querySelector('.reading-progress');
-  if (!bar) return;
-  window.addEventListener('scroll', function() {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    if (h > 0) bar.style.width = (window.scrollY / h * 100) + '%';
-  }, { passive: true });
+  // No-op: module reading progress is handled by updateProgress()
 }
 
 // Feature 2: Persönlicher Lesefortschritt
@@ -777,16 +791,16 @@ function showSituationalHint() {
   if (!container || !document.querySelector('.hero')) return;
 
   var hour = new Date().getHours();
+  var month = new Date().getMonth();
   var hint = '';
+  // Nacht-Hinweis hat höchste Priorität (Krisenrelevanz)
   if (hour >= 22 || hour < 6) {
     hint = '\uD83C\uDF19 Gerade nachts hier? Sie sind nicht allein. Die Dargebotene Hand ist 24/7 erreichbar: <a href="tel:143" style="font-weight:700;">143</a>';
+  } else if (month === 11) {
+    // Feiertage: Dezember (nur tagsüber)
+    hint = '\uD83D\uDD6F Feiertage k\u00F6nnen besonders belastend sein. Unterst\u00FCtzung finden Sie jederzeit: <a href="/notfall/">Notfall &amp; Krisenhilfe</a>';
   } else if (hour >= 6 && hour < 9) {
     hint = '\u2600\uFE0F Ein neuer Tag. Auch kleine Schritte z\u00E4hlen.';
-  }
-  // Feiertage: Dezember
-  var month = new Date().getMonth();
-  if (month === 11) {
-    hint = '\uD83D\uDD6F Feiertage k\u00F6nnen besonders belastend sein. Unterst\u00FCtzung finden Sie jederzeit: <a href="/notfall/">Notfall &amp; Krisenhilfe</a>';
   }
 
   if (hint) {

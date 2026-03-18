@@ -134,7 +134,6 @@ background:var(--text);
 border-radius:2px;
 transition:transform 0.2s, opacity 0.2s}.hamburger.open span:nth-child(1){ transform: translateY(6px) rotate(45deg)}.hamburger.open span:nth-child(2){ opacity: 0}.hamburger.open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg)}
 .bookmark-panel{
-display:none;
 position:fixed;
 top:58px;
 right:1rem;
@@ -145,7 +144,11 @@ border-radius:var(--radius);
 padding:var(--sp-sm);
 box-shadow:var(--shadow-lg);
 z-index:210;
-font-size:var(--fs-sm)}.bookmark-panel.open{ display: block}
+font-size:var(--fs-sm);
+opacity:0;
+visibility:hidden;
+transform:translateY(-8px);
+transition:opacity 0.2s, visibility 0.2s, transform 0.2s}.bookmark-panel.open{ opacity:1;visibility:visible;transform:translateY(0)}
 .settings-panel{
 display:none;
 position:fixed;
@@ -2093,23 +2096,6 @@ border-radius:8px;
 padding:var(--sp-sm) 1rem;
 font-size:var(--fs-sm);
 line-height:1.6}.sc-result.visible{ display: block}.sc-result-title{ font-weight: 700;margin-bottom: 0.25rem}
-.bookmarks-panel{
-position:fixed;
-top:52px;
-right:0;
-background:var(--white);
-border-left:1px solid var(--border);
-border-bottom:1px solid var(--border);
-border-radius:0 0 0 12px;
-padding:var(--sp-sm) 1rem;
-z-index:98;
-min-width:200px;
-box-shadow:-3px 4px 14px rgba(0,0,0,0.08);
-font-size:var(--fs-sm);
-opacity:0;
-visibility:hidden;
-transform:translateY(-8px);
-transition:opacity 0.2s, visibility 0.2s, transform 0.2s}.bookmarks-panel.open{ opacity:1;visibility:visible;transform:translateY(0)}
 .bp-title{ font-weight:700;margin-bottom:0.5rem;font-size:var(--fs-sm);color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}.bp-item{ padding: 0.25rem 0;border-bottom: 1px solid var(--bg2)}.bp-item:last-child{ border-bottom: none}.bp-item a{ color: var(--text);text-decoration: none;font-size: var(--fs-sm);transition:color 0.2s}.bp-item a:hover{ color: var(--m1)}.bp-empty{ color: var(--muted);font-style: italic;font-size: var(--fs-sm)}
 .module-feedback{
 display:flex;
@@ -3021,6 +3007,7 @@ cursor:pointer;
 transition:all 0.15s;
 color:var(--text)}.filter-chip:hover{ border-color: var(--m6);color: var(--m6)}
 .filter-chip.active{ background:var(--m6);border-color:var(--m6);color:white}
+.filter-hidden{ display:none!important}
 .card-grid{ display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:1rem;margin:1.5rem 0}
 .pdf-card .card-icon{ font-size:var(--fs-h2);flex-shrink:0;line-height:1}
 .pdf-card .card-body h3{

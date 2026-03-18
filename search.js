@@ -58,7 +58,7 @@ function doSearch(q) {
     if (allMatch) results.push(entry);
   });
   if (results.length === 0) {
-    container.innerHTML = '<div class="sr-empty">Keine Treffer für «' + q.replace(/</g,'&lt;') + '»</div>';
+    container.innerHTML = '<div class="sr-empty">Keine Treffer für «' + q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') + '»</div>';
     return;
   }
   var seen = {};
@@ -77,6 +77,7 @@ function doSearch(q) {
       var end = Math.min(snippet.length, idx + 120);
       snippet = (start > 0 ? '…' : '') + snippet.substring(start, end) + (end < r.t.length ? '…' : '');
     }
+    snippet = snippet.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     words.forEach(function(w) {
       var re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
       snippet = snippet.replace(re, '<mark>$1</mark>');
