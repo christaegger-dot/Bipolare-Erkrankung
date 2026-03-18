@@ -4,17 +4,18 @@ Interaktive Website der **Fachstelle Angehörigenarbeit**, Psychiatrische Univer
 
 ## Inhalt
 
-Evidenzbasierte Psychoedukation für Angehörige und Partner\*innen von Menschen mit bipolarer Störung — in 7 Modulen:
+Evidenzbasierte Psychoedukation für Angehörige und Partner\*innen von Menschen mit bipolarer Störung — in 8 Modulen:
 
-| Modul | Thema | Farbe |
-|-------|-------|-------|
-| 1 | Verstehen — Was ist eine bipolare Störung? | 🔵 |
-| 2 | Beziehung — Was macht die Krankheit mit uns? | 🟢 |
-| 3 | Erschöpfung — Wenn die Kraft nicht mehr reicht | 🟠 |
-| 4 | Loyalität — Zwischen Bleiben und Gehen | 🟤 |
-| 5 | Krisenmanagement — Handeln, wenn es ernst wird | 🔴 |
-| 6 | Selbstfürsorge — Sich selbst nicht verlieren | 🟣 |
-| 7 | Zukunft — Wie es weitergehen kann | 🟡 |
+| Modul | Thema |
+|-------|-------|
+| 1 | Verstehen — Was ist eine bipolare Störung? |
+| 2 | Belastung — Was die Erkrankung mit Angehörigen macht |
+| 3 | Beziehung — Was macht die Krankheit mit uns? |
+| 4 | Erschöpfung — Wenn die Kraft nicht mehr reicht |
+| 5 | Loyalität — Zwischen Bleiben und Gehen |
+| 6 | Selbstfürsorge und Handeln — Sich selbst nicht verlieren |
+| 7 | Resilienz — Widerstandskraft aufbauen |
+| 8 | Ressourcen — Hilfe und Unterstützung finden |
 
 Zusätzlich: Notfallseite, Handouts (24 PDFs), Ressourcen, Glossar, Impressum.
 
@@ -48,7 +49,7 @@ python3 -m http.server 8000
 ├── main.js                 # Hauptskript
 ├── search.js               # Suchfunktion
 ├── search-index.js         # Suchindex
-├── modul/1–7/index.html    # 7 Modulseiten
+├── modul/1–8/index.html    # 8 Modulseiten
 ├── notfall/index.html      # Notfallseite
 ├── handouts/index.html     # PDF-Übersicht
 ├── ressourcen/index.html   # Externe Ressourcen & Glossar

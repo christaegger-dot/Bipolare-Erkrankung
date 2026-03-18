@@ -8,7 +8,8 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+    # TODO: Remove 'unsafe-inline' after migrating onclick handlers to addEventListener
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
 
 # Handout-Infografiken: Im Browser anzeigen (Vorschau)
 [[headers]]
@@ -18,7 +19,7 @@
     Content-Disposition = "inline"
     Cache-Control = "public, max-age=604800"
 
-# Handout-Textversionen: Download erzwingen
+# Handout-Textversionen: Im Browser anzeigen (Vorschau)
 [[headers]]
   for = "/handouts-text/*.pdf"
   [headers.values]
@@ -75,6 +76,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# sw.js must not be cached — placed after /*.js to override immutable
 [[headers]]
   for = "/sw.js"
   [headers.values]

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bipolar-puk-v15';
+const CACHE_NAME = 'bipolar-puk-v16';
 const CORE_ASSETS = [
   '/',
   '/shared.css',
@@ -25,8 +25,8 @@ const CORE_ASSETS = [
   '/404.html'
 ];
 
-// Netlify redirects these shortcut URLs (301) to /handouts/... paths.
-// Offline the redirect doesn't work, so we resolve them in the SW.
+// Netlify rewrites these shortcut URLs (200) to /handouts/... paths.
+// Offline the rewrite doesn't work, so we resolve them in the SW.
 const REDIRECT_MAP = {
   '/notfall/':    '/handouts/notfall/',
   '/notfall':     '/handouts/notfall/',
