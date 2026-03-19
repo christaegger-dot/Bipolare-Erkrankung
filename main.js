@@ -336,7 +336,7 @@ function showScResult() {
     msg = '<div class="sc-result-title" style="color:var(--danger)">Handlungsbedarf erkennbar</div>Mehrere Warnsignale deuten darauf hin, dass Sie sich stark verausgaben. Bitte nehmen Sie sich <a href="/modul/6/">Modul 6</a> zu Herzen und überlegen Sie, ob eine Beratung bei der <a href="/modul/8/">Fachstelle Angehörigenarbeit</a> hilfreich wäre.<br><strong>Psychiatrischer Notfalldienst ZH:</strong> <a href="tel:0800336655" style="color:var(--danger);font-weight:700;">0800 33 66 55</a> (24/7, kostenlos)';
   }
   result.innerHTML = msg;
-  result.classList.add('show');
+  result.classList.add('visible');
   result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -611,7 +611,7 @@ var eeData = {
     tip: 'Ausweg: Selbstfürsorge ist keine Option, sondern Pflicht. Wenn Sie leer sind, können Sie nicht geben. <a href="/modul/6/">Modul 6</a> zeigt konkrete Strategien.'
   },
   4: {
-    title: 'Kritik &amp; Hostilität',
+    title: 'Kritik & Hostilität',
     text: 'Aus Erschöpfung und Frustration entstehen negative Kommentare, Kritik oder Gereiztheit. Das ist keine Bosheit — es ist eine menschliche Reaktion auf Überlastung. Aber: Hohe Kritik erhöht das Rückfallrisiko erheblich — bei depressiven Episoden wurde ein fünffach erhöhtes Rückfallrisiko nachgewiesen (Yan et al., 2004).',
     tip: 'Ausweg: EE lässt sich verändern. Kommunikationstraining und Psychoedukation senken das EE-Niveau nachweislich — und damit das Rückfallrisiko Ihres Partners.'
   }
