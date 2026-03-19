@@ -641,7 +641,7 @@ function highlightEE(n) {
     detail.innerHTML =
       '<div class="ee-detail-title">' + escHtml(d.title) + '</div>' +
       '<div class="ee-detail-text">' + escHtml(d.text) + '</div>' +
-      '<div class="ee-detail-tip">💡 ' + escHtml(d.tip) + '</div>';
+      '<div class="ee-detail-tip">💡 ' + d.tip + '</div>';
   }
 }
 
@@ -963,7 +963,7 @@ if (document.querySelector('.hv-wrap')) {
       '<span class="hv-d-step" style="color:' + escHtml(d.stepColor) + ';background:' + escHtml(d.stepBg) + '">' + escHtml(d.step) + '</span>' +
       '<p class="hv-d-title" style="color:' + escHtml(d.color) + '">' + escHtml(d.title) + '</p>' +
       '<p class="hv-d-body">' + escHtml(d.body) + '</p>' +
-      '<div class="hv-d-sign" style="border-left-color:' + escHtml(d.signBorder) + '">' + escHtml(d.sign) + '</div>';
+      '<div class="hv-d-sign" style="border-left-color:' + escHtml(d.signBorder) + '">' + d.sign + '</div>';
   };
   // Keyboard support
   stations.forEach(function(s) {
@@ -1133,8 +1133,8 @@ if (document.querySelector('.sl-wrap')) {
         '<p class="sl-d-title" style="color:' + escHtml(d.color) + '">' + escHtml(d.title) + '</p>' +
       '</div>' +
       '<p class="sl-d-why">' + escHtml(d.why) + '</p>' +
-      '<p class="sl-d-body">' + escHtml(d.body) + '</p>' +
-      '<div class="sl-d-concrete" style="border-left-color:' + escHtml(d.signBorder) + '">' + escHtml(d.concrete) + '</div>';
+      '<p class="sl-d-body">' + d.body + '</p>' +
+      '<div class="sl-d-concrete" style="border-left-color:' + escHtml(d.signBorder) + '">' + d.concrete + '</div>';
     panel.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
 })();
