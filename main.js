@@ -29,6 +29,21 @@ function escHtml(str) {
   return d.innerHTML;
 }
 
+/* Announce status messages to screenreaders via a live region */
+function announceStatus(msg) {
+  var el = document.getElementById('a11y-status');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'a11y-status';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    el.className = 'sr-only';
+    document.body.appendChild(el);
+  }
+  el.textContent = '';
+  setTimeout(function() { el.textContent = msg; }, 100);
+}
+
 // ═══════════════════════════════════════════════════════
 // EVENT DELEGATION — ersetzt alle inline onclick/onkeydown
 // ═══════════════════════════════════════════════════════
@@ -184,7 +199,9 @@ function showSlide(n) {
   var slide = document.getElementById('slide-' + n);
   if (slide) slide.classList.remove('hidden');
   document.querySelectorAll('.slider-tab').forEach(function(t, i) {
-    t.classList.toggle('active', i === n);
+    var isActive = i === n;
+    t.classList.toggle('active', isActive);
+    t.setAttribute('aria-selected', String(isActive));
   });
 }
 
@@ -260,6 +277,7 @@ function copyNum(num, btn) {
   function onCopied() {
     btn.textContent = '✓ Kopiert';
     btn.classList.add('copied');
+    announceStatus('Nummer kopiert');
     setTimeout(function() {
       btn.textContent = '📋 Kopieren';
       btn.classList.remove('copied');
@@ -359,6 +377,8 @@ function showScResult() {
   }
   result.innerHTML = msg;
   result.classList.add('visible');
+  result.setAttribute('role', 'status');
+  result.setAttribute('aria-live', 'polite');
   result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -392,7 +412,11 @@ function renderBookmarksList() {
 
 function toggleBookmarks() {
   var panel = document.getElementById('bookmark-panel');
-  if (panel) panel.classList.toggle('open');
+  if (panel) {
+    panel.classList.toggle('open');
+    var btn = document.getElementById('nav-bookmark');
+    if (btn) btn.setAttribute('aria-expanded', String(panel.classList.contains('open')));
+  }
 }
 
 // Settings panel toggle
@@ -400,9 +424,15 @@ function toggleSettings() {
   var panel = document.getElementById('settings-panel');
   if (!panel) return;
   panel.classList.toggle('open');
+  var toggle = document.getElementById('settings-toggle');
+  if (toggle) toggle.setAttribute('aria-expanded', String(panel.classList.contains('open')));
   // Close bookmarks if open
   var bp = document.getElementById('bookmark-panel');
-  if (bp && bp.classList.contains('open')) bp.classList.remove('open');
+  if (bp && bp.classList.contains('open')) {
+    bp.classList.remove('open');
+    var bpBtn = document.getElementById('nav-bookmark');
+    if (bpBtn) bpBtn.setAttribute('aria-expanded', 'false');
+  }
 }
 // Close settings panel on outside click
 document.addEventListener('click', function(e) {
@@ -410,6 +440,7 @@ document.addEventListener('click', function(e) {
   var toggle = document.getElementById('settings-toggle');
   if (panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target !== toggle) {
     panel.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
   }
 });
 
@@ -438,6 +469,7 @@ function waSelect(btn, qId) {
   if (fbEl) {
     fbEl.textContent = fbText;
     fbEl.classList.add('show', isCorrect ? 'correct' : 'wrong');
+    announceStatus((isCorrect ? 'Richtig: ' : 'Falsch: ') + fbText);
   }
 }
 
@@ -457,6 +489,7 @@ function shareSection(id, btn) {
   function onCopied() {
     btn.textContent = '✓ Link kopiert';
     btn.classList.add('copied');
+    announceStatus('Link kopiert');
     setTimeout(function() {
       btn.textContent = '🔗 Teilen';
       btn.classList.remove('copied');
@@ -485,7 +518,12 @@ function toggleNav() {
   var links = document.getElementById('nav-links');
   var btn = document.getElementById('hamburger');
   if (links) links.classList.toggle('open');
-  if (btn) btn.classList.toggle('open');
+  if (btn) {
+    btn.classList.toggle('open');
+    var isOpen = btn.classList.contains('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    btn.setAttribute('aria-label', isOpen ? 'Menü schliessen' : 'Menü öffnen');
+  }
 }
 
 // Init on load

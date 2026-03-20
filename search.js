@@ -64,16 +64,43 @@ function openSearch() {
   if (!overlay) return;
   loadSearchIndex();
   overlay.classList.add('active');
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Suche');
   setTimeout(function() {
     var input = document.getElementById('search-input');
     if (input) input.focus();
   }, 100);
   document.body.style.overflow = 'hidden';
+  // Focus trap within search overlay
+  overlay._trapFocus = function(e) {
+    if (e.key !== 'Tab') return;
+    var focusable = overlay.querySelectorAll('input, button, a[href], [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+  overlay.addEventListener('keydown', overlay._trapFocus);
 }
 
 function closeSearch() {
   var overlay = document.getElementById('search-overlay');
-  if (overlay) overlay.classList.remove('active');
+  if (overlay) {
+    overlay.classList.remove('active');
+    overlay.removeAttribute('role');
+    overlay.removeAttribute('aria-modal');
+    if (overlay._trapFocus) {
+      overlay.removeEventListener('keydown', overlay._trapFocus);
+      overlay._trapFocus = null;
+    }
+  }
   var input = document.getElementById('search-input');
   if (input) input.value = '';
   var results = document.getElementById('search-results');
