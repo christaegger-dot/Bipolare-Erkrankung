@@ -1960,6 +1960,9 @@ font-size:var(--fs-xs);
 color:var(--muted);
 padding:0.25rem 0.8rem 0;
 opacity:0.6}
+@media(max-width:768px){
+.pole-toggle-wrap .keyboard-hint{display:none}
+}
 .slider-examples{
 background:var(--bg);
 border-radius:var(--radius);
