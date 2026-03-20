@@ -580,16 +580,16 @@ padding:0 0.5rem}.svg-scroll-mobile svg{ min-width:480px;width:100%}
   font-size:var(--fs-sm);color:var(--text);width:220px;flex-shrink:0;
   line-height:1.35;text-align:right}
 .burden-row-track{
-  flex:1;height:24px;background:var(--bg2);border-radius:3px;position:relative;overflow:visible}
+  flex:1;height:24px;background:var(--bg2);border-radius:3px;overflow:hidden}
 .burden-row-bar{
   height:100%;background:var(--m2);border-radius:3px 0 0 3px;
-  position:relative;transition:width 0.6s ease}
+  transition:width 0.6s ease}
 .burden-row:first-child .burden-row-bar,
 .burden-row:nth-child(2) .burden-row-bar,
 .burden-row:nth-child(3) .burden-row-bar{background:var(--m1)}
 .burden-row-val{
-  position:absolute;right:-3rem;top:50%;transform:translateY(-50%);
-  font-size:var(--fs-sm);font-weight:700;color:var(--text);white-space:nowrap}
+  font-size:var(--fs-sm);font-weight:700;color:var(--text);
+  white-space:nowrap;flex-shrink:0;min-width:2.8rem;text-align:right}
 .burden-chart-axis{
   display:flex;justify-content:space-between;margin-top:0.3rem;padding-left:calc(220px + 0.6rem);
   font-size:var(--fs-xs);color:var(--muted);border-top:1px solid var(--border);padding-top:0.25rem}
@@ -602,10 +602,10 @@ padding:0 0.5rem}.svg-scroll-mobile svg{ min-width:480px;width:100%}
   line-height:1.4;font-style:italic}
 @media(max-width:600px){
   .burden-chart{padding:1rem}
-  .burden-row{flex-direction:column;align-items:stretch;gap:0.15rem;margin-bottom:0.6rem}
-  .burden-row-label{width:auto;text-align:left;font-weight:600}
-  .burden-row-track{height:22px}
-  .burden-row-val{right:-2.8rem}
+  .burden-row{flex-wrap:wrap;gap:0.15rem 0.5rem;margin-bottom:0.6rem}
+  .burden-row-label{width:100%;text-align:left;font-weight:600}
+  .burden-row-track{flex:1;height:22px;min-width:0}
+  .burden-row-val{min-width:auto}
   .burden-chart-axis{padding-left:0}
 }
 .quote-card{
