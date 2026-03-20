@@ -16,7 +16,7 @@ function loadSearchIndex() {
   script.onload = function() { searchIndexLoaded = true; };
   script.onerror = function() {
     var c = document.getElementById('search-results');
-    if (c) c.innerHTML = '<div class="sr-empty">Suchindex konnte nicht geladen werden. Bitte Seite neu laden.</div>';
+    if (c) c.innerHTML = '<div class="sr-empty">Suche konnte nicht geladen werden. Bitte laden Sie die Seite neu.</div>';
   };
   document.head.appendChild(script);
 }
@@ -117,7 +117,7 @@ function doSearch(q) {
     return;
   }
   if (typeof SEARCH_INDEX === 'undefined') {
-    container.innerHTML = '<div class="sr-empty">Suchindex wird geladen…</div>';
+    container.innerHTML = '<div class="sr-empty">Suche wird vorbereitet…</div>';
     return;
   }
 

@@ -234,7 +234,7 @@ function toggleAllPhases(btn) {
   var wrap = document.querySelector('.phase-model-wrap');
   if (!wrap) return;
   var isAll = wrap.classList.toggle('phase-all-wrap');
-  btn.textContent = isAll ? '✕ Einzeln anzeigen' : '☰ Alle Phasen anzeigen';
+  btn.textContent = isAll ? '↩ Einzeln anzeigen' : '☰ Alle Phasen anzeigen';
   if (isAll) {
     document.querySelectorAll('.phase-content').forEach(function(p) {
       p.classList.remove('hidden');
@@ -371,7 +371,7 @@ function showScResult() {
   if (yesCount <= 1) {
     msg = '<div class="sc-result-title" style="color:var(--m3)">Sie sind gut aufgestellt</div>Sie scheinen Grenzen zu kennen und sich zu schützen. Nutzen Sie die Ressourcen hier, um das zu festigen — besonders <a href="/modul/7/">Modul 7 (Resilienz)</a>.';
   } else if (yesCount <= 3) {
-    msg = '<div class="sc-result-title" style="color:var(--m4)">Sie befinden sich in der Mitte</div>Einige Warnsignale sind vorhanden. <a href="/modul/6/">Modul 6 (Selbstfürsorge und Handeln)</a> ist besonders relevant für Sie — und <a href="/modul/8/">Modul 8</a> zeigt Ihnen, wo Sie Unterstützung finden.';
+    msg = '<div class="sc-result-title" style="color:var(--m4)">Einige Belastungszeichen erkennbar</div>Einige Warnsignale sind vorhanden. <a href="/modul/6/">Modul 6 (Selbstfürsorge und Handeln)</a> ist besonders relevant für Sie — und <a href="/modul/8/">Modul 8</a> zeigt Ihnen, wo Sie Unterstützung finden.';
   } else {
     msg = '<div class="sc-result-title" style="color:var(--danger)">Handlungsbedarf erkennbar</div>Mehrere Warnsignale deuten darauf hin, dass Sie sich stark verausgaben. Bitte nehmen Sie sich <a href="/modul/6/">Modul 6</a> zu Herzen und überlegen Sie, ob eine Beratung bei der <a href="/modul/8/">Fachstelle Angehörigenarbeit</a> hilfreich wäre.<br><strong>Psychiatrischer Notfalldienst ZH:</strong> <a href="tel:0800336655" style="color:var(--danger);font-weight:700;">0800 33 66 55</a> (24/7, kostenlos)';
   }
@@ -393,7 +393,7 @@ function renderBookmarksList() {
   if (!container) return;
   var keys = Object.keys(bookmarks);
   if (keys.length === 0) {
-    container.innerHTML = '<div class="bp-empty">Noch keine Lesezeichen gesetzt.</div>';
+    container.innerHTML = '<div class="bp-empty">Lesezeichen werden hier angezeigt.</div>';
     return;
   }
   container.innerHTML = keys.map(function(k) {
@@ -661,19 +661,19 @@ var eeData = {
     tip: 'Ausweg: Erinnern Sie sich — Sie können die Erkrankung nicht verursachen oder heilen. Selbstmitgefühl (<a href="/modul/6/">Modul 6</a>) hilft, diesen Kreislauf zu unterbrechen.'
   },
   2: {
-    title: 'Überinvolvement',
-    text: 'Aus Schuldgefühlen entsteht übermässiges Engagement: ständig Medikamente kontrollieren, dreimal täglich nach der Stimmung fragen, alle Entscheidungen übernehmen. Das erhöht unbeabsichtigt den Druck auf die erkrankte Person.',
+    title: 'Überengagement',
+    text: 'Aus Schuldgefühlen entsteht Überengagement: ständig Medikamente kontrollieren, dreimal täglich nach der Stimmung fragen, alle Entscheidungen übernehmen. Das erhöht unbeabsichtigt den Druck auf die erkrankte Person.',
     tip: 'Ausweg: Klare Grenzen setzen — nicht als Strafe, sondern als Schutzraum für beide. «Ich bin für dich da, aber nicht für deine Entscheidungen verantwortlich.»'
   },
   3: {
     title: 'Erschöpfung',
-    text: 'Das Überinvolvement zehrt die eigene Kraft auf. Schlafmangel, körperliche Symptome, emotionale Taubheit. Die Toleranzschwelle sinkt — jede Kleinigkeit kann zur Belastung werden.',
+    text: 'Das Überengagement zehrt die eigene Kraft auf. Schlafmangel, körperliche Symptome, emotionale Taubheit. Die Toleranzschwelle sinkt — jede Kleinigkeit kann zur Belastung werden.',
     tip: 'Ausweg: Selbstfürsorge ist keine Option, sondern Pflicht. Wenn Sie leer sind, können Sie nicht geben. <a href="/modul/6/">Modul 6</a> zeigt konkrete Strategien.'
   },
   4: {
     title: 'Kritik & Hostilität',
     text: 'Aus Erschöpfung und Frustration entstehen negative Kommentare, Kritik oder Gereiztheit. Das ist keine Bosheit — es ist eine menschliche Reaktion auf Überlastung. Aber: Hohe Kritik erhöht das Rückfallrisiko erheblich — bei depressiven Episoden wurde ein fünffach erhöhtes Rückfallrisiko nachgewiesen (Yan et al., 2004).',
-    tip: 'Ausweg: EE lässt sich verändern. Kommunikationstraining und Psychoedukation senken das EE-Niveau nachweislich — und damit das Rückfallrisiko Ihres Partners.'
+    tip: 'Ausweg: Expressed Emotion lässt sich verändern. Kommunikationstraining und Psychoedukation senken das Niveau nachweislich — und damit das Rückfallrisiko Ihres Partners.'
   }
 };
 
@@ -1020,7 +1020,7 @@ if (document.querySelector('.hv-wrap')) {
       panel.style.borderColor = '#e8e2dc';
       panel.innerHTML =
         '<div class="hv-empty">' +
-        '<p class="text-sm-muted">Klicken Sie auf eine Station im Kreislauf.</p>' +
+        '<p class="text-sm-muted">Wählen Sie eine Station im Kreislauf.</p>' +
         '<p class="text-xs-muted">Erkennen Sie sich? Das ist kein Versagen — es ist ein automatisierter Schutzmechanismus.</p></div>';
       return;
     }
@@ -1102,7 +1102,7 @@ if (document.querySelector('.kk-wrap')) {
       panel.style.borderColor = '#e8e2dc';
       panel.innerHTML =
         '<div class="kk-empty">' +
-        '<p class="text-sm-muted">Klicken Sie auf ein Feld.</p>' +
+        '<p class="text-sm-muted">Wählen Sie ein Feld.</p>' +
         '<p class="text-xs-muted">Dieselbe Situation — vier verschiedene Reaktionen.<br>' +
         'Was verändert sich, wenn Sie den Zeitpunkt oder die Worte ändern?</p></div>';
       return;
@@ -1188,7 +1188,7 @@ if (document.querySelector('.sl-wrap')) {
       panel.style.borderColor = '#e8e2dc';
       panel.innerHTML =
         '<div class="sl-empty">' +
-        '<p style="font-size:.88rem;color:var(--muted)">Klicken Sie auf eine Säule.</p>' +
+        '<p style="font-size:.88rem;color:var(--muted)">Wählen Sie eine Säule.</p>' +
         '<p style="font-size:.78rem;color:#8a7e76">Solidarität zerbricht selten an zu wenig Liebe — sondern an Erschöpfung, fehlenden Grenzen und Isolation.</p></div>';
       return;
     }
