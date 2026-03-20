@@ -671,7 +671,7 @@ function highlightEE(n) {
     detail.innerHTML =
       '<div class="ee-detail-title">' + escHtml(d.title) + '</div>' +
       '<div class="ee-detail-text">' + escHtml(d.text) + '</div>' +
-      '<div class="ee-detail-tip">💡 ' + d.tip + '</div>';
+      '<div class="ee-detail-tip"><strong>Ausweg:</strong> ' + d.tip.replace(/^Ausweg:\s*/,'') + '</div>';
   }
 }
 
@@ -919,7 +919,7 @@ if (document.querySelector('.hv-wrap')) {
       stepColor: "#8a6d00", stepBg: "#fef9ec",
       color: "#8a6d00", bg: "#fef9ec", border: "#d4a843",
       signBorder: "#d4a843",
-      title: "🔍 Beobachten — Stimmung scannen",
+      title: "Schritt 1 — Beobachten: Stimmung scannen",
       body: "Sie haben gelernt, Ihren Partner ständig zu «lesen»: Wie ist die Stimme heute? Schläft er genug? Gibt sie zu viel aus? Diese Wachsamkeit war anfangs hilfreich — aber sie ist zum Dauerzustand geworden. Ihr Gehirn sucht permanent nach Warnsignalen, auch wenn es gerade ruhig ist.",
       sign: "<strong>Kennen Sie das?</strong> Sie betreten einen Raum und checken als Erstes die Stimmung Ihres Partners — bevor Sie überhaupt «Hallo» sagen."
     },
@@ -928,7 +928,7 @@ if (document.querySelector('.hv-wrap')) {
       stepColor: "#bf5b00", stepBg: "#fff3e0",
       color: "#bf5b00", bg: "#fff3e0", border: "#e67e22",
       signBorder: "#e67e22",
-      title: "⚡ Anspannung — Körper in Alarmbereitschaft",
+      title: "Schritt 2 — Anspannung: Körper in Alarmbereitschaft",
       body: "Das ständige Beobachten aktiviert Ihr Stresssystem. Cortisol steigt, Muskeln spannen sich an, das Herz schlägt schneller. Ihr Körper reagiert, als wäre permanent Gefahr — auch wenn Ihr Partner gerade stabil ist. Das ist keine Einbildung, sondern Neurobiologie.",
       sign: "<strong>Kennen Sie das?</strong> Ihr Partner lacht laut am Telefon — und Sie denken sofort: Ist das schon Manie? Ihr Körper reagiert mit einem Adrenalinstoss, bevor Ihr Verstand überhaupt einschätzen kann."
     },
@@ -937,7 +937,7 @@ if (document.querySelector('.hv-wrap')) {
       stepColor: "#a02015", stepBg: "#fdf0ed",
       color: "#a02015", bg: "#fdf0ed", border: "#c0392b",
       signBorder: "#c0392b",
-      title: "😢 Erschöpfung — Schlaf und Konzentration sinken",
+      title: "Schritt 3 — Erschöpfung: Schlaf und Konzentration sinken",
       body: "Die Daueranspannung fordert ihren Preis: Sie schlafen schlecht, können sich kaum konzentrieren, vergessen Dinge. Ihre eigenen Ressourcen schrumpfen — aber die Anforderungen bleiben gleich. Sie funktionieren auf Reserve.",
       sign: "<strong>Kennen Sie das?</strong> Sie liegen nachts wach und hören, ob Ihr Partner noch atmet, ob er aufsteht, ob das Licht angeht. Am nächsten Morgen sind Sie erschöpfter als am Abend."
     },
@@ -946,7 +946,7 @@ if (document.querySelector('.hv-wrap')) {
       stepColor: "#2d6a4f", stepBg: "#edf5f0",
       color: "#2d6a4f", bg: "#edf5f0", border: "#6b9e7e",
       signBorder: "#6b9e7e",
-      title: "🌿 Erholung — kurz und nie vollständig",
+      title: "Schritt 4 — Erholung: kurz und nie vollständig",
       body: "Wenn eine Krise überstanden ist, erholen Sie sich — aber nicht ganz. Ein Rest Anspannung bleibt. Mit jeder Episode wird die Erholungsphase kürzer und unvollständiger. Wie eine Batterie, die nie mehr ganz auflädt.",
       sign: "<strong>Kennen Sie das?</strong> Der Urlaub beginnt — und statt sich zu entspannen, warten Sie innerlich darauf, dass das Telefon klingelt. «Richtige» Erholung fühlt sich fast bedrohlich an."
     }
