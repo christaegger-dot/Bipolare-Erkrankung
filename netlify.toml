@@ -1,4 +1,5 @@
 [build]
+  command = "node cache-bust.js"
   publish = "."
 
 [[headers]]
