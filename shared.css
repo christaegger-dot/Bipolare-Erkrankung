@@ -574,16 +574,16 @@ margin-bottom:0.5rem}
   font-size:var(--fs-sm);color:var(--text);width:220px;flex-shrink:0;
   line-height:1.35;text-align:right}
 .burden-row-track{
-  flex:1;height:24px;background:var(--bg2);border-radius:3px;position:relative;overflow:visible}
+  flex:1;height:24px;background:var(--bg2);border-radius:3px;overflow:hidden}
 .burden-row-bar{
   height:100%;background:var(--m2);border-radius:3px 0 0 3px;
-  position:relative;transition:width 0.6s ease}
+  transition:width 0.6s ease}
 .burden-row:first-child .burden-row-bar,
 .burden-row:nth-child(2) .burden-row-bar,
 .burden-row:nth-child(3) .burden-row-bar{background:var(--m1)}
 .burden-row-val{
-  position:absolute;right:-3rem;top:50%;transform:translateY(-50%);
-  font-size:var(--fs-sm);font-weight:700;color:var(--text);white-space:nowrap}
+  font-size:var(--fs-sm);font-weight:700;color:var(--text);
+  white-space:nowrap;flex-shrink:0;min-width:2.8rem;text-align:right}
 .burden-chart-axis{
   display:flex;justify-content:space-between;margin-top:0.3rem;padding-left:calc(220px + 0.6rem);
   font-size:var(--fs-xs);color:var(--muted);border-top:1px solid var(--border);padding-top:0.25rem}
@@ -595,11 +595,11 @@ margin-bottom:0.5rem}
   margin-top:0.5rem;font-size:var(--fs-xs);color:var(--muted);
   line-height:1.4;font-style:italic}
 @media(max-width:600px){
-  .burden-chart{padding:1rem 3.2rem 1rem 1rem}
-  .burden-row{flex-direction:column;align-items:stretch;gap:0.15rem;margin-bottom:0.6rem}
-  .burden-row-label{width:auto;text-align:left;font-weight:600}
-  .burden-row-track{height:22px}
-  .burden-row-val{right:-2.8rem}
+  .burden-chart{padding:1rem}
+  .burden-row{flex-wrap:wrap;gap:0.15rem 0.5rem;margin-bottom:0.6rem}
+  .burden-row-label{width:100%;text-align:left;font-weight:600}
+  .burden-row-track{flex:1;height:22px;min-width:0}
+  .burden-row-val{min-width:auto}
   .burden-chart-axis{padding-left:0}
 }
 .quote-card{
@@ -4112,6 +4112,10 @@ details[open] .glossar-def {
   background:#f0ece6;
   border:1.5px solid #8a8070;
 }
+.barr-card-emoji{
+  font-size:1.5rem;
+  line-height:1;
+}
 .barr-card-marker{
   display:flex;align-items:center;justify-content:center;
   width:28px;height:28px;border-radius:50%;
@@ -4545,232 +4549,4 @@ details[open] .glossar-def {
   .notfall-krisenplan-card p:first-child{ font-size:1rem}
   .mini-guide + .mini-guide{ margin-top:0.6rem}
   .mg-header{ min-height:52px;padding:0.8rem 1rem}
-}
-
-/* ── Inline-Hinweis-Boxen (Behandlung, Notfall, Beratung) ── */
-.behandlung-box{
-  margin:2rem 0;padding:1.5rem;border-radius:var(--radius);border-left:4px solid var(--box-accent,var(--m1))
-}
-.behandlung-box h3{
-  font-family:'Lora', Georgia, serif;font-size:var(--fs-lg);margin-bottom:0.8rem;color:var(--box-accent,var(--m1))
-}
-.source-note{
-  font-size:var(--fs-sm);color:var(--muted);margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(74,107,138,0.2)
-}
-.inline-hinweis{
-  margin:1.5rem 0;padding:1rem 1.2rem;border-left:4px solid var(--box-accent,var(--m1));border-radius:var(--radius)
-}
-.inline-hinweis p{ margin:0;font-size:var(--fs-sm);line-height:1.6}
-
-/* ══════════════════════════════════════════════════════════════
-   MOBILE-ROBUSTHEIT — Diagramme, Floating-UI, Phase-Boxen
-   ══════════════════════════════════════════════════════════════ */
-
-/* ── P0.1: SVG-Diagramme dürfen nie abgeschnitten wirken ── */
-@media (max-width: 600px){
-  /* Statt horizontalem Scroll: SVGs auf Viewport-Breite skalieren */
-  .svg-scroll-mobile{
-    overflow-x: visible;
-    margin: 0;
-    padding: 0
-  }
-  .svg-scroll-mobile svg{
-    min-width: 0;
-    width: 100%;
-    height: auto
-  }
-  /* Wellendiagramme: overflow sichtbar machen */
-  .wave-chart-wrap{
-    overflow: visible
-  }
-  .wave-chart-wrap svg{
-    width: 100%;
-    height: auto
-  }
-  /* Solidaritätserosion */
-  .burden-accumulation-wrap{
-    overflow: visible
-  }
-  .burden-accumulation-wrap svg{
-    width: 100%;
-    height: auto;
-    min-width: 0
-  }
-}
-
-/* ── P0.2: Phase-Boxen — keine Wortzerlegung ── */
-.phase-name{
-  word-break: normal;
-  overflow-wrap: normal;
-  hyphens: none
-}
-.phase-tag{
-  white-space: nowrap
-}
-@media (max-width: 600px){
-  .phase-tab{
-    min-width: fit-content;
-    white-space: nowrap
-  }
-}
-
-/* ── P0.3: Floating-Buttons weniger invasiv auf Mobile ── */
-@media (max-width: 600px){
-  /* SOS-Button: kompakter, dezenter wenn nicht aktiv */
-  .notfall-fab{
-    padding: 8px 10px 8px 7px;
-    gap: 4px;
-    font-size: 0.7rem;
-    opacity: 0.88;
-    bottom: 12px;
-    left: 10px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.08)
-  }
-  .notfall-fab:hover,
-  .notfall-fab:focus-visible{
-    opacity: 1
-  }
-  .notfall-fab-icon{
-    font-size: 1rem
-  }
-  /* Back-to-top: kleiner */
-  #back-to-top{
-    width: 38px;
-    height: 38px;
-    bottom: 70px;
-    right: 1rem;
-    font-size: 0.85rem
-  }
-  #back-to-top.visible{
-    opacity: 0.75
-  }
-  #back-to-top:active{
-    opacity: 1
-  }
-}
-
-/* ── P1.1: SVG-Text und Linien mobil kräftiger ── */
-@media (max-width: 600px){
-  /* Dickere Linien in Diagrammen */
-  .viz-svg path[fill="none"]{
-    stroke-width: 3
-  }
-  .viz-svg line{
-    stroke-width: 1.5
-  }
-  /* Wave-Charts und Burden-Accumulation: ebenfalls kräftiger */
-  .wave-chart path[fill="none"],
-  .burden-accumulation-svg path[fill="none"]{
-    stroke-width: 3
-  }
-  .wave-chart line,
-  .burden-accumulation-svg line{
-    stroke-width: 1.5
-  }
-  /* Grössere Achsen-Labels */
-  .viz-svg text,
-  .wave-chart text,
-  .burden-accumulation-svg text{
-    font-size: 15px
-  }
-  /* Titel im SVG etwas grösser */
-  .viz-svg text[font-weight="600"],
-  .wave-chart text[font-weight="600"],
-  .burden-accumulation-svg text[font-weight="600"]{
-    font-size: 17px
-  }
-  /* Legenden-Text besser lesbar */
-  .wave-caption{
-    font-size: var(--fs-base);
-    font-style: normal
-  }
-}
-/* Noch kräftiger auf sehr kleinen Screens */
-@media (max-width: 400px){
-  .viz-svg text,
-  .wave-chart text,
-  .burden-accumulation-svg text{
-    font-size: 13px
-  }
-  .viz-svg text[font-weight="600"],
-  .wave-chart text[font-weight="600"],
-  .burden-accumulation-svg text[font-weight="600"]{
-    font-size: 15px
-  }
-}
-
-/* ── P1.2: Header mobil kompakter ── */
-@media (max-width: 600px){
-  nav{
-    min-height: 44px;
-    padding: 0 0.75rem
-  }
-  .nav-logo-text{
-    font-size: 0.85rem
-  }
-  /* Nav-Controls (Search, Bookmark, Settings) dezenter */
-  .nav-controls .nav-btn{
-    padding: 0.4rem;
-    min-height: 40px;
-    min-width: 40px;
-    font-size: var(--fs-xs)
-  }
-}
-
-/* ── P1.3: Burden-Chart mobile Kompaktheit ── */
-@media (max-width: 480px){
-  .burden-chart{
-    padding: 0.8rem 1rem
-  }
-  .burden-chart-title{
-    font-size: 0.95rem
-  }
-  .burden-row-track{
-    height: 20px
-  }
-}
-
-/* ── P2.1: Eisberg-Diagramm mobil robuster ── */
-@media (max-width: 480px){
-  .eisberg-v2{
-    padding: 0.8rem
-  }
-  .eisberg-v2-annotation{
-    font-size: var(--fs-xs)
-  }
-}
-
-/* ── P2.2: Kommunikations-Kompass mobil ── */
-@media (max-width: 480px){
-  .kk-wrap{
-    padding: 0.8rem
-  }
-  .kk-axis-label{
-    font-size: 0.7rem
-  }
-  .kk-q .kk-label{
-    font-size: 0.72rem
-  }
-  .kk-q .kk-sub{
-    font-size: 0.58rem
-  }
-}
-
-/* ── P2.3: RGT-Marker professioneller integrieren ── */
-.rgt-marker{
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1)
-}
-.rgt-marker-inner{
-  width: 6px;
-  height: 6px
-}
-
-/* ── P2.4: Solidaritäts-Säulen mobil ── */
-@media (max-width: 480px){
-  .sl-pillar{
-    padding: 0.6rem 0.4rem
-  }
-  .sl-p-title{
-    font-size: var(--fs-xs)
-  }
 }
