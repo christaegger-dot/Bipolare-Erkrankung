@@ -27,6 +27,20 @@ Zusätzlich: Notfallseite, Handouts (24 PDFs), Ressourcen, Glossar, Impressum.
 - Responsive Design, Barrierefreiheit (ARIA, Skip-Links, Tastaturnavigation)
 - Dark Mode, Lesezeichen, Suchfunktion
 
+## GitHub-Token konfigurieren
+
+Falls du einen persönlichen GitHub-Token (Personal Access Token, PAT) erstellt hast, kannst du ihn als Repository-Secret hinterlegen:
+
+1. Gehe im Repository zu **Settings → Secrets and variables → Actions**
+2. Klicke auf **New repository secret**
+3. Name: `GH_PAT`
+4. Secret: *(deinen Token einfügen)*
+5. Klicke auf **Add secret**
+
+Der Token wird dann vom Workflow automatisch verwendet (z. B. für automatische PRs und Merges).
+
+> **Hinweis:** Falls kein `GH_PAT`-Secret vorhanden ist, verwendet der Workflow automatisch den integrierten `GITHUB_TOKEN`.
+
 ## Deployment
 
 ### Netlify (empfohlen)
